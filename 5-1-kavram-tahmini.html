@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kavram Tahmini</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+:root{color-scheme:light;--lacivert:#1E3A8A;--turuncu:#EA580C;--mavi:#2563EB;--mavi-z:#DBEAFE;--yesil:#16A34A;--yesil-z:#DCFCE7;--kirmizi:#DC2626;--kirmizi-z:#FEE2E2;--mor:#7C3AED;--mor-z:#EDE9FE;--sari:#CA8A04;--sari-z:#FEF9C3;--pembe:#DB2777;--camgob:#0E7490;
+  --metin:#1E293B;--soluk:#64748B;--cizgi:#CBD5E1;--f-baslik:"Baloo 2","Trebuchet MS",system-ui,sans-serif;--f-govde:"Nunito","Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--metin);font-family:var(--f-govde);font-size:20px;padding:10px;-webkit-user-select:none;user-select:none;
+  background:radial-gradient(circle at 6% 10%,#FDE68A 0 110px,transparent 111px),radial-gradient(circle at 94% 92%,#FBCFE8 0 150px,transparent 151px),radial-gradient(circle at 96% 8%,#BFDBFE 0 80px,transparent 81px),radial-gradient(circle at 4% 94%,#BBF7D0 0 100px,transparent 101px),linear-gradient(135deg,#EEF2FF,#FDF4FF 55%,#ECFEFF)}
+h1,h2,h3{font-family:var(--f-baslik);margin:0;line-height:1.15}
+.kap{max-width:1500px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.ust{background:linear-gradient(90deg,#1E3A8A,#7C3AED 60%,#DB2777);color:#fff;border-radius:16px;padding:8px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;box-shadow:0 4px 14px rgba(124,58,237,.3)}
+.ust h1{font-size:clamp(24px,2.8vw,36px);flex:1 1 280px}
+.skor{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.cip{border-radius:12px;padding:4px 16px;font-family:var(--f-baslik);font-size:clamp(20px,2vw,28px);background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.35);font-variant-numeric:tabular-nums}
+.cip.a.sira{background:var(--turuncu);border-color:#fff}.cip.b.sira{background:var(--mor);border-color:#fff}
+.kdugme{font:inherit;font-weight:800;font-size:16px;border:2px solid rgba(255,255,255,.45);background:transparent;color:#fff;border-radius:10px;padding:5px 12px;cursor:pointer}
+.kutu{background:#fff;border-radius:24px;border:5px solid #C4B5FD;padding:20px 24px;box-shadow:0 4px 16px rgba(30,58,138,.1)}
+.dugme{font-family:var(--f-baslik);font-weight:800;font-size:clamp(22px,2.1vw,30px);border:0;border-radius:16px;padding:12px 28px;cursor:pointer;background:var(--turuncu);color:#fff;box-shadow:0 5px 0 #9A3412}
+.dugme:active{transform:translateY(2px);box-shadow:0 2px 0 #9A3412}
+.dugme.lac{background:var(--lacivert);box-shadow:0 5px 0 #172554}.dugme.yes{background:var(--yesil);box-shadow:0 5px 0 #14532D}
+.dugme.mor{background:var(--mor);box-shadow:0 5px 0 #4C1D95}.dugme.kir{background:var(--kirmizi);box-shadow:0 5px 0 #7F1D1D}.dugme.gri{background:#64748B;box-shadow:0 5px 0 #334155}
+.dugme:disabled{opacity:.45;cursor:default}
+button:focus-visible{outline:5px solid var(--turuncu);outline-offset:3px}
+.ekran{background:#fff;border:5px solid #C4B5FD;border-radius:26px;padding:24px;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.ekran h2{font-size:clamp(32px,4.2vw,56px);color:var(--lacivert)}
+.ekran p{margin:0;font-size:clamp(20px,2vw,26px);max-width:920px}
+.etiket-s{font-weight:800;color:var(--soluk);font-size:18px;letter-spacing:.06em;text-transform:uppercase}
+.secim{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.secim button{font:inherit;font-weight:800;font-size:21px;padding:10px 18px;border-radius:14px;border:3px solid var(--cizgi);background:#fff;color:var(--metin);cursor:pointer;min-width:160px}
+.secim button[aria-pressed="true"]{border-color:var(--turuncu);background:#FFEDD5;color:#9A3412}
+.secim small{display:block;font-weight:600;color:var(--soluk);font-size:15px}
+.cevap{background:var(--yesil-z);border:4px solid var(--yesil);border-radius:16px;padding:12px 18px;font-size:clamp(24px,2.6vw,36px);font-weight:800;color:#14532D;animation:gel .35s ease-out}
+.yanlis-k{background:var(--kirmizi-z);border:4px solid var(--kirmizi);border-radius:16px;padding:12px 18px;font-size:clamp(22px,2.3vw,32px);font-weight:800;color:#7F1D1D;animation:gel .35s ease-out}
+@keyframes gel{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes salla{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.salla{animation:salla .4s}
+.buyuk-ikon{font-size:72px;line-height:1}
+.not{font-size:18px;color:var(--soluk)}
+.hazirlayan{font-size:14px;color:#64748B;margin:4px 0 0}.hazirlayan b{color:#1E3A8A}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.oyun{display:grid;grid-template-columns:260px minmax(0,1fr);gap:16px;align-items:stretch;min-height:calc(100vh - 110px)}
+.robot-kutu{background:#fff;border:5px solid #C4B5FD;border-radius:22px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.pil{display:flex;gap:4px;padding:6px;border:5px solid var(--lacivert);border-radius:12px;position:relative}
+.pil::after{content:"";position:absolute;right:-14px;top:30%;width:8px;height:40%;background:var(--lacivert);border-radius:0 4px 4px 0}
+.pil i{width:26px;height:40px;border-radius:5px;background:#E2E8F0;transition:background .3s}
+.pil-yazi{font-weight:800;font-size:22px;color:var(--lacivert)}
+.sag{display:flex;flex-direction:column;gap:14px;justify-content:center}
+.ipucu{background:linear-gradient(135deg,#EEF2FF,#FDF4FF);border:4px solid #C4B5FD;border-radius:22px;padding:14px 20px;font-size:clamp(24px,2.6vw,38px);font-weight:800;color:var(--lacivert)}
+.ipucu small{display:block;font-size:.6em;color:var(--mor);font-family:var(--f-baslik)}
+.kelime{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.kutuh{width:clamp(48px,5.4vw,78px);height:clamp(60px,6.6vw,94px);border-bottom:7px solid var(--lacivert);display:grid;place-items:center;font-family:var(--f-baslik);font-size:clamp(42px,5vw,72px);font-weight:800;color:var(--lacivert);background:#fff;border-radius:12px 12px 4px 4px}
+.kutuh.bos{border:0;background:none;width:24px}
+.kutuh.ac{animation:gel .3s;color:#15803D}
+.kutuh.kayip{color:var(--kirmizi)}
+.klavye{display:flex;flex-direction:column;gap:7px;align-items:center}
+.klavye div{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.tus{font:inherit;font-family:var(--f-baslik);font-weight:800;font-size:clamp(26px,2.7vw,38px);width:clamp(46px,4.6vw,66px);height:clamp(50px,5vw,70px);border-radius:14px;border:0;background:var(--lacivert);color:#fff;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.25)}
+.tus:hover:not(:disabled){transform:translateY(-2px)}
+.tus.var{background:var(--yesil)}.tus.yok{background:#CBD5E1;color:#94A3B8;box-shadow:none}
+.tus:disabled{cursor:default}
+.sonuc{display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center;animation:gel .3s}
+.sonuc h3{margin:0;font-family:var(--f-baslik);font-size:clamp(34px,4vw,56px)}
+@media (max-width:900px){.oyun{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="kap">
+  <header class="ust"><h1 id="baslik"></h1><div class="skor" id="skor"></div><span id="sesyer"></span></header>
+  <main id="sahne"></main>
+</div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const el=(t,o={},...c)=>{const e=document.createElement(t);Object.entries(o).forEach(([k,v])=>v==null||v===false?0:k==='class'?e.className=v:k==='html'?e.innerHTML=v:k.startsWith('on')?e[k]=v:e.setAttribute(k,v));c.flat().forEach(x=>x!=null&&x!==false&&e.append(x));return e};
+const md=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+const karistir=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let SES=true,AC=null;
+function bip(f,t=.15,tip='triangle'){if(!SES)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=tip;o.frequency.value=f;g.gain.setValueAtTime(.2,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+t);o.connect(g).connect(AC.destination);o.start();o.stop(AC.currentTime+t)}catch(e){}}
+const dogruSes=()=>{bip(784,.12);setTimeout(()=>bip(1047,.2),110)}, yanlisSes=()=>{bip(220,.25,'sawtooth')};
+const IMZA=()=>el('p',{class:'hazirlayan'},el('b',{},'Hazırlayan: Ayşegül SARIKOZ (BTY Dersi Öğretmeni)'),' · Türkkonut Ortaokulu');
+function sesDugmesi(){const b=el('button',{class:'kdugme','aria-pressed':'true'},'Ses: açık');b.onclick=()=>{SES=!SES;b.textContent='Ses: '+(SES?'açık':'kapalı');b.setAttribute('aria-pressed',String(SES))};return b}
+function secimGrubu(secenekler,deger,degis){const g=el('div',{class:'secim'});const yen=()=>g.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===String(deger()))));
+  secenekler.forEach(([v,ad,alt])=>g.append(el('button',{'data-v':v,onclick:()=>{degis(v);yen()}},ad,alt?el('small',{},alt):null)));yen();return g}
+
+const OYUN={"baslik": "Robotu Kurtar", "konular": [{"ad": "Bilişim Teknolojileri", "kelimeler": [["Donanım", "Bilgisayarın elle dokunulabilen parçaları"], ["Yazılım", "Donanıma ne yapacağını söyleyen programlar"], ["İnternet", "Dünyadaki bilgisayarları birbirine bağlayan ağ"], ["Tablet", "Dokunmatik ekranlı, taşınabilir bilgisayar"], ["Robot", "Programlanarak iş yapan makine"], ["Sensör", "Isı, ışık, hareket gibi değişiklikleri algılayan parça"], ["Telgraf", "Mors alfabesiyle haberleşmeyi sağlayan eski araç"], ["Abaküs", "Boncuklarla hesap yapılan ilk hesaplama aracı"], ["Uydu", "Dünya’nın çevresinde dolaşan ve iletişim sağlayan araç"], ["Akıllı saat", "Bileğe takılan, adım ve nabız ölçebilen cihaz"], ["Bilgi", "İşlenmiş, anlamlı hâle gelmiş veri"], ["Veri", "İşlenmemiş ham bilgi parçası"], ["İletişim", "Bilginin bir kişiden diğerine aktarılması"]]}, {"ad": "Dijital Sağlık", "kelimeler": [["Ergonomi", "Araçları vücudumuza uygun ve sağlıklı kullanma bilimi"], ["Duruş", "Bilgisayar başında dik ve doğru oturma şekli"], ["Mola", "Ekran başında her 20-30 dakikada verilen ara"], ["Uyku", "Ekranları yatmadan önce kapatmak bunu iyileştirir"], ["Bağımlılık", "Teknolojiyi bırakamama, sürekli kullanma isteği"], ["Zorbalık", "İnternette başkasını üzme, korkutma veya alay etme"], ["Göz", "20-20-20 kuralıyla dinlendirdiğimiz organ"], ["Egzersiz", "Mola sırasında yapılan esneme ve hareketler"], ["Denge", "Ekran süresi ile diğer etkinlikler arasındaki uyum"], ["Aile", "Sorun yaşadığımızda ilk haber verdiğimiz kişiler"], ["Engelle", "Rahatsız eden kişiye uygulanan işlem"], ["Bildir", "Uygunsuz içeriği şikâyet etme"]]}, {"ad": "Dijital Vatandaşlık", "kelimeler": [["Rumuz", "İnternette gerçek ad yerine kullanılan takma ad"], ["Avatar", "Fotoğraf yerine kullanılan çizgi resim"], ["Gizlilik", "Kişisel bilgilerin başkalarıyla paylaşılmaması"], ["Şifre", "Hesaplarımızı koruyan gizli anahtar"], ["Görgü", "İnternette saygılı ve kibar davranma kuralları"], ["Hukuk", "İnternette uyulması gereken yasalar"], ["Telif", "Bir eserin sahibine ait olan hak"], ["Kaynak", "Kullandığımız bilginin nereden alındığı"], ["Ayak izi", "İnternette bıraktığımız kalıcı izler"], ["Erişim", "Herkesin teknolojiye ulaşabilmesi"], ["Ticaret", "İnternetten alışveriş yapma"], ["Güvenlik", "Cihazları ve bilgileri tehlikelere karşı koruma"], ["Sorumluluk", "Yaptığımız paylaşımların sonucunu üstlenme"]]}, {"ad": "Yapay Zekâ", "kelimeler": [["Algoritma", "Bir işi yapmak için sıralı adımlar"], ["Veri", "Yapay zekânın öğrenmek için kullandığı bilgiler"], ["Öğrenme", "Örneklerden kural çıkarma"], ["Robot", "Yapay zekâ ile hareket edebilen makine"], ["Asistan", "Sesli komutlarla çalışan yardımcı yazılım"], ["Tanıma", "Yüz, ses veya nesneyi ayırt etme"], ["Tahmin", "Önceki verilere bakarak geleceği kestirme"], ["Çeviri", "Bir dili başka bir dile aktarma"], ["Etik", "Yapay zekâyı doğru ve adil kullanma kuralları"], ["Arf", "“Makine düşünebilir mi?” konferansını veren Türk matematikçi"], ["Turing", "Makinelerin düşünüp düşünemeyeceğini test eden bilim insanı"], ["Sohbet", "Yapay zekâ ile yazışarak konuşma"], ["Model", "Verilerle eğitilmiş yapay zekâ programı"]]}, {"ad": "Bilgisayar Sistemleri", "kelimeler": [["İşlemci", "Bilgisayarın beyni (CPU)"], ["Anakart", "Tüm parçaların takıldığı ana devre kartı"], ["Bellek", "Geçici bilgileri tutan RAM"], ["Klavye", "Harf ve sayı girmeye yarayan giriş birimi"], ["Fare", "İmleci hareket ettiren giriş birimi"], ["Yazıcı", "Belgeleri kâğıda aktaran çıkış birimi"], ["Hoparlör", "Ses veren çıkış birimi"], ["Monitör", "Görüntü veren çıkış birimi"], ["Kamera", "Görüntü alan giriş birimi"], ["Depolama", "Dosyaları kalıcı olarak saklama"], ["Pardus", "Okullarımızda kullanılan yerli işletim sistemi"], ["Bayt", "Sekiz bitten oluşan veri birimi"], ["Girdi", "Bilgisayara verilen veri"]]}, {"ad": "Dosya ve Klasör", "kelimeler": [["Dosya", "Bilgisayarda saklanan belge, resim veya ses"], ["Klasör", "Dosyaları düzenli saklamak için kullanılan kutu"], ["Uzantı", "Dosya adının sonundaki noktadan sonraki kısım"], ["Kopyala", "Dosyanın bir benzerini oluşturma"], ["Taşı", "Dosyayı başka bir yere götürme"], ["Sil", "Dosyayı çöp kutusuna gönderme"], ["Yedek", "Dosyanın kaybolmasına karşı saklanan kopyası"], ["Masaüstü", "Bilgisayar açıldığında gördüğümüz ilk ekran"], ["Simge", "Dosya veya programı gösteren küçük resim"], ["Sıkıştır", "Dosyayı ZIP yaparak küçültme"], ["Arama", "Kaybolan dosyayı bulma"], ["Kaydet", "Yapılan çalışmayı saklama"], ["Çöp kutusu", "Silinen dosyaların geçici olarak gittiği yer"]]}]};
+document.title=OYUN.baslik;$('#baslik').textContent=OYUN.baslik;$('#sesyer').append(sesDugmesi());
+const sahne=$('#sahne'),TAKIM=['Turuncu takım','Mor takım'],PIL=6,RENKLER=['#DC2626','#EA580C','#CA8A04','#65A30D','#16A34A','#16A34A'];
+const ayar={mod:'tek',konu:'hepsi'};let D=null;
+const UP=s=>s.toLocaleUpperCase('tr').replace(/Â/g,'A').replace(/Î/g,'İ').replace(/Û/g,'U');
+const SATIR=['ERTYUIOPĞÜ','ASDFGHJKLŞİ','ZCVBNMÖÇ'];
+
+function robot(p){const yuz=p>=4?'M38 70 Q50 80 62 70':p>=2?'M38 73 L62 73':'M38 78 Q50 68 62 78',renk=p>=4?'#22C55E':p>=2?'#F59E0B':'#EF4444',goz=p>0?'#38BDF8':'#64748B';
+  return `<svg viewBox="0 0 100 120" width="180" height="216" aria-hidden="true"><line x1="50" y1="8" x2="50" y2="20" stroke="#475569" stroke-width="4"/><circle cx="50" cy="8" r="6" fill="${renk}"/>
+  <rect x="18" y="20" width="64" height="62" rx="16" fill="#E0E7FF" stroke="#4338CA" stroke-width="4"/><circle cx="37" cy="46" r="9" fill="${goz}"/><circle cx="63" cy="46" r="9" fill="${goz}"/>
+  ${p>0?'<circle cx="40" cy="43" r="3" fill="#fff"/><circle cx="66" cy="43" r="3" fill="#fff"/>':''}<path d="${yuz}" stroke="#1E1B4B" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <rect x="28" y="86" width="44" height="30" rx="8" fill="#C7D2FE" stroke="#4338CA" stroke-width="4"/><rect x="40" y="94" width="20" height="10" rx="3" fill="${renk}"/></svg>`;}
+function skorCiz(){const k=$('#skor');k.innerHTML='';if(!D)return;
+  if(D.mod==='takim')[0,1].forEach(i=>k.append(el('span',{class:'cip '+(i?'b':'a')+(D.sira===i?' sira':'')},`${TAKIM[i]}: ${D.puan[i]}`)));
+  else k.append(el('span',{class:'cip'},`Bilinen: ${D.puan[0]} / ${D.i+(D.bitti?1:0)}`));
+  k.append(el('span',{class:'cip'},`Kavram ${D.i+1} / ${D.liste.length}`),el('button',{class:'kdugme',onclick:son},'Oyunu bitir'));}
+function giris(){D=null;skorCiz();sahne.innerHTML='';
+  sahne.append(el('section',{class:'ekran'},el('h2',{},OYUN.baslik),el('p',{html:md('İpucunu oku, kavramın harflerini tahmin et. Her yanlış harf **robotun pilini** bir çubuk azaltır. Pil bitmeden kavramı bul!')}),
+    el('div',{class:'etiket-s'},'Konu'),secimGrubu([['hepsi','Tüm tema','Karışık'],...OYUN.konular.map((k,i)=>[String(i),k.ad,k.kelimeler.length+' kavram'])],()=>ayar.konu,v=>ayar.konu=v),
+    el('div',{class:'etiket-s'},'Nasıl oynayalım?'),secimGrubu([['tek','Tüm sınıf','Birlikte tahmin edin'],['takim','İki takım','Her kavram bir takıma']],()=>ayar.mod,v=>ayar.mod=v),
+    el('button',{class:'dugme',onclick:basla},'Başla'),IMZA()));}
+function basla(){const h=ayar.konu==='hepsi'?OYUN.konular.flatMap(k=>k.kelimeler.map(w=>[...w,k.ad])):OYUN.konular[+ayar.konu].kelimeler.map(w=>[...w,OYUN.konular[+ayar.konu].ad]);
+  D={mod:ayar.mod,liste:karistir(h).slice(0,10),i:0,puan:[0,0],sira:0};tur();}
+function tur(){const[w,t,konu]=D.liste[D.i];D.k=UP(w);D.bilinen=new Set();D.pil=PIL;D.bitti=false;skorCiz();sahne.innerHTML='';
+  const rob=el('div',{html:robot(PIL)}),pil=el('div',{class:'pil'},Array.from({length:PIL},()=>el('i'))),py=el('div',{class:'pil-yazi'});
+  const kel=el('div',{class:'kelime'},[...D.k].map(c=>el('div',{class:'kutuh'+(c===' '?' bos':''),'data-c':c})));
+  const kl=el('div',{class:'klavye'},SATIR.map(s=>el('div',{},[...s].map(c=>el('button',{class:'tus','data-c':c,onclick:e=>tahmin(c,e.currentTarget)},c)))));
+  const alt=el('div');
+  const sag=el('section',{class:'sag'},el('div',{class:'ipucu'},el('small',{},konu+(D.mod==='takim'?' · Sıra: '+TAKIM[D.sira]:'')),t),kel,kl,alt);
+  sahne.append(el('div',{class:'oyun'},el('aside',{class:'robot-kutu'},rob,pil,py,el('button',{class:'dugme gri',style:'font-size:18px;padding:8px 14px',onclick:()=>{const g=[...D.k].filter(c=>c!==' '&&!D.bilinen.has(c));if(!g.length||D.pil<=1)return;const c=g[Math.floor(Math.random()*g.length)];D.pil--;tahmin(c,$(`.tus[data-c="${c}"]`),true)}},'Harf al (-1 pil)')),sag));
+  const ciz=()=>{[...pil.children].forEach((b,i)=>b.style.background=i<D.pil?RENKLER[D.pil-1]:'#E2E8F0');py.textContent='Pil: %'+Math.round(D.pil/PIL*100);rob.innerHTML=robot(D.pil)};ciz();
+  function tahmin(c,b,hediye){if(D.bitti||D.bilinen.has(c)||(b&&b.disabled))return;D.bilinen.add(c);if(b)b.disabled=true;
+    if(D.k.includes(c)){b&&b.classList.add('var');$$(`.kutuh[data-c="${c}"]`).forEach(x=>{x.textContent=c;x.classList.add('ac')});hediye?bip(660,.1):dogruSes();}
+    else{b&&b.classList.add('yok');D.pil--;yanlisSes();}
+    ciz();const tamam=[...D.k].every(x=>x===' '||D.bilinen.has(x));if(tamam||D.pil<=0)bitir(tamam);}
+  function bitir(ok){D.bitti=true;$$('.tus').forEach(x=>x.disabled=true);
+    if(!ok)$$('.kutuh').forEach(x=>{if(!x.textContent&&x.dataset.c!==' '){x.textContent=x.dataset.c;x.classList.add('kayip')}});
+    if(ok){if(D.mod==='takim')D.puan[D.sira]+=10+D.pil*2;else D.puan[0]++;[523,659,784].forEach((f,i)=>setTimeout(()=>bip(f,.15),i*110));}
+    skorCiz();const sonmu=D.i+1>=D.liste.length;
+    kl.replaceWith(el('div',{class:'sonuc'},el('h3',{style:`color:${ok?'var(--yesil)':'var(--kirmizi)'}`},ok?(D.mod==='takim'?`Bravo ${TAKIM[D.sira]}! +${10+D.pil*2}`:'Bravo! Robotu kurtardınız!'):'Pil bitti! Kavram: '+w.toLocaleUpperCase('tr')),
+      el('button',{class:'dugme lac',onclick:()=>{if(sonmu)son();else{D.i++;if(D.mod==='takim')D.sira=1-D.sira;tur()}}},sonmu?'Sonucu gör':'Sonraki kavram →')));}
+  D.tus=c=>tahmin(c,$(`.tus[data-c="${c}"]`));}
+addEventListener('keydown',e=>{if(!D||D.bitti||!D.tus)return;const c=UP(e.key);if(c.length===1&&SATIR.join('').includes(c))D.tus(c);});
+function son(){if(!D)return;const p=el('section',{class:'ekran'});[523,659,784,1047].forEach((f,i)=>setTimeout(()=>bip(f,.22),i*140));
+  if(D.mod==='takim'){const[a,b]=D.puan;p.append(el('h2',{},a===b?'Berabere!':(a>b?TAKIM[0]:TAKIM[1])+' kazandı!'),el('p',{},`${TAKIM[0]}: ${a} puan · ${TAKIM[1]}: ${b} puan`));}
+  else p.append(el('h2',{},'Tebrikler sınıf!'),el('p',{},`${D.i+(D.bitti?1:0)} kavramdan ${D.puan[0]} tanesini buldunuz.`));
+  p.append(el('button',{class:'dugme',onclick:giris},'Yeni oyun'),IMZA());D=null;skorCiz();sahne.innerHTML='';sahne.append(p);}
+giris();
+</script>
+</body>
+</html>

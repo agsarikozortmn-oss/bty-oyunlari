@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kutu Aç</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+:root{color-scheme:light;--lacivert:#1E3A8A;--turuncu:#EA580C;--mavi:#2563EB;--mavi-z:#DBEAFE;--yesil:#16A34A;--yesil-z:#DCFCE7;--kirmizi:#DC2626;--kirmizi-z:#FEE2E2;--mor:#7C3AED;--mor-z:#EDE9FE;--sari:#CA8A04;--sari-z:#FEF9C3;--pembe:#DB2777;--camgob:#0E7490;
+  --metin:#1E293B;--soluk:#64748B;--cizgi:#CBD5E1;--f-baslik:"Baloo 2","Trebuchet MS",system-ui,sans-serif;--f-govde:"Nunito","Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--metin);font-family:var(--f-govde);font-size:20px;padding:10px;-webkit-user-select:none;user-select:none;
+  background:radial-gradient(circle at 6% 10%,#FDE68A 0 110px,transparent 111px),radial-gradient(circle at 94% 92%,#FBCFE8 0 150px,transparent 151px),radial-gradient(circle at 96% 8%,#BFDBFE 0 80px,transparent 81px),radial-gradient(circle at 4% 94%,#BBF7D0 0 100px,transparent 101px),linear-gradient(135deg,#EEF2FF,#FDF4FF 55%,#ECFEFF)}
+h1,h2,h3{font-family:var(--f-baslik);margin:0;line-height:1.15}
+.kap{max-width:1500px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.ust{background:linear-gradient(90deg,#1E3A8A,#7C3AED 60%,#DB2777);color:#fff;border-radius:16px;padding:8px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;box-shadow:0 4px 14px rgba(124,58,237,.3)}
+.ust h1{font-size:clamp(24px,2.8vw,36px);flex:1 1 280px}
+.skor{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.cip{border-radius:12px;padding:4px 16px;font-family:var(--f-baslik);font-size:clamp(20px,2vw,28px);background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.35);font-variant-numeric:tabular-nums}
+.cip.a.sira{background:var(--turuncu);border-color:#fff}.cip.b.sira{background:var(--mor);border-color:#fff}
+.kdugme{font:inherit;font-weight:800;font-size:16px;border:2px solid rgba(255,255,255,.45);background:transparent;color:#fff;border-radius:10px;padding:5px 12px;cursor:pointer}
+.kutu{background:#fff;border-radius:24px;border:5px solid #C4B5FD;padding:20px 24px;box-shadow:0 4px 16px rgba(30,58,138,.1)}
+.dugme{font-family:var(--f-baslik);font-weight:800;font-size:clamp(22px,2.1vw,30px);border:0;border-radius:16px;padding:12px 28px;cursor:pointer;background:var(--turuncu);color:#fff;box-shadow:0 5px 0 #9A3412}
+.dugme:active{transform:translateY(2px);box-shadow:0 2px 0 #9A3412}
+.dugme.lac{background:var(--lacivert);box-shadow:0 5px 0 #172554}.dugme.yes{background:var(--yesil);box-shadow:0 5px 0 #14532D}
+.dugme.mor{background:var(--mor);box-shadow:0 5px 0 #4C1D95}.dugme.kir{background:var(--kirmizi);box-shadow:0 5px 0 #7F1D1D}.dugme.gri{background:#64748B;box-shadow:0 5px 0 #334155}
+.dugme:disabled{opacity:.45;cursor:default}
+button:focus-visible{outline:5px solid var(--turuncu);outline-offset:3px}
+.ekran{background:#fff;border:5px solid #C4B5FD;border-radius:26px;padding:24px;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.ekran h2{font-size:clamp(32px,4.2vw,56px);color:var(--lacivert)}
+.ekran p{margin:0;font-size:clamp(20px,2vw,26px);max-width:920px}
+.etiket-s{font-weight:800;color:var(--soluk);font-size:18px;letter-spacing:.06em;text-transform:uppercase}
+.secim{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.secim button{font:inherit;font-weight:800;font-size:21px;padding:10px 18px;border-radius:14px;border:3px solid var(--cizgi);background:#fff;color:var(--metin);cursor:pointer;min-width:160px}
+.secim button[aria-pressed="true"]{border-color:var(--turuncu);background:#FFEDD5;color:#9A3412}
+.secim small{display:block;font-weight:600;color:var(--soluk);font-size:15px}
+.cevap{background:var(--yesil-z);border:4px solid var(--yesil);border-radius:16px;padding:12px 18px;font-size:clamp(24px,2.6vw,36px);font-weight:800;color:#14532D;animation:gel .35s ease-out}
+.yanlis-k{background:var(--kirmizi-z);border:4px solid var(--kirmizi);border-radius:16px;padding:12px 18px;font-size:clamp(22px,2.3vw,32px);font-weight:800;color:#7F1D1D;animation:gel .35s ease-out}
+@keyframes gel{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes salla{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.salla{animation:salla .4s}
+.buyuk-ikon{font-size:72px;line-height:1}
+.not{font-size:18px;color:var(--soluk)}
+.hazirlayan{font-size:14px;color:#64748B;margin:4px 0 0}.hazirlayan b{color:#1E3A8A}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.kutular{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;height:calc(100vh - 110px)}
+.hediye{font:inherit;border:0;border-radius:22px;cursor:pointer;color:#fff;font-family:var(--f-baslik);font-size:clamp(44px,5.5vw,84px);font-weight:800;position:relative;overflow:hidden;box-shadow:0 6px 0 rgba(0,0,0,.22);transition:transform .15s}
+.hediye:hover:not(:disabled){transform:translateY(-4px) rotate(-1deg)}
+.hediye::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:16%;transform:translateX(-50%);background:rgba(255,255,255,.28)}
+.hediye::after{content:"";position:absolute;top:22%;left:0;right:0;height:14%;background:rgba(255,255,255,.28)}
+.hediye span{position:relative;z-index:1;text-shadow:0 3px 0 rgba(0,0,0,.2)}
+.hediye:disabled{background:#E2E8F0!important;color:#94A3B8;box-shadow:none;cursor:default}
+.hediye:disabled::before,.hediye:disabled::after{display:none}
+.hediye .kim{position:absolute;bottom:8px;left:0;right:0;font-size:16px;font-family:var(--f-govde)}
+.acik-kutu{display:flex;flex-direction:column;gap:16px;justify-content:center;min-height:calc(100vh - 110px);animation:gel .35s}
+.acik-kutu .bas{display:flex;align-items:center;gap:14px}
+.no{display:grid;place-items:center;width:90px;height:90px;border-radius:22px;color:#fff;font-family:var(--f-baslik);font-size:52px;flex:none}
+.soru{font-family:var(--f-baslik);font-size:clamp(32px,3.8vw,58px);font-weight:700;color:var(--lacivert);line-height:1.22}
+.secenekler{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.secenekler div{border:4px solid var(--cizgi);border-radius:18px;padding:12px 16px;font-weight:800;font-size:clamp(24px,2.5vw,36px);display:flex;gap:12px;align-items:center;background:#F8FAFC}
+.secenekler b{display:grid;place-items:center;min-width:52px;height:52px;border-radius:50%;background:var(--lacivert);color:#fff;font-family:var(--f-baslik)}
+.secenekler div.dogru{border-color:var(--yesil);background:var(--yesil-z)}.secenekler div.dogru b{background:var(--yesil)}
+.surpriz{font-family:var(--f-baslik);font-size:clamp(44px,5.5vw,84px);text-align:center;color:var(--mor)}
+.dugmeler{display:flex;gap:12px;flex-wrap:wrap}
+@media (max-width:900px){.kutular{grid-template-columns:repeat(4,1fr);height:auto}.hediye{min-height:110px}.secenekler{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="kap">
+  <header class="ust"><h1 id="baslik"></h1><div class="skor" id="skor"></div><span id="sesyer"></span></header>
+  <main id="sahne"></main>
+</div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const el=(t,o={},...c)=>{const e=document.createElement(t);Object.entries(o).forEach(([k,v])=>v==null||v===false?0:k==='class'?e.className=v:k==='html'?e.innerHTML=v:k.startsWith('on')?e[k]=v:e.setAttribute(k,v));c.flat().forEach(x=>x!=null&&x!==false&&e.append(x));return e};
+const md=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+const karistir=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let SES=true,AC=null;
+function bip(f,t=.15,tip='triangle'){if(!SES)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=tip;o.frequency.value=f;g.gain.setValueAtTime(.2,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+t);o.connect(g).connect(AC.destination);o.start();o.stop(AC.currentTime+t)}catch(e){}}
+const dogruSes=()=>{bip(784,.12);setTimeout(()=>bip(1047,.2),110)}, yanlisSes=()=>{bip(220,.25,'sawtooth')};
+const IMZA=()=>el('p',{class:'hazirlayan'},el('b',{},'Hazırlayan: Ayşegül SARIKOZ (BTY Dersi Öğretmeni)'),' · Türkkonut Ortaokulu');
+function sesDugmesi(){const b=el('button',{class:'kdugme','aria-pressed':'true'},'Ses: açık');b.onclick=()=>{SES=!SES;b.textContent='Ses: '+(SES?'açık':'kapalı');b.setAttribute('aria-pressed',String(SES))};return b}
+function secimGrubu(secenekler,deger,degis){const g=el('div',{class:'secim'});const yen=()=>g.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===String(deger()))));
+  secenekler.forEach(([v,ad,alt])=>g.append(el('button',{'data-v':v,onclick:()=>{degis(v);yen()}},ad,alt?el('small',{},alt):null)));yen();return g}
+
+const OYUN={"baslik": "Kutu Aç · 6. Sınıf 1. Tema", "giris": "Bir kutu seç, içinden çıkan soruyu cevapla! Sorular 6. sınıf 1. temanın **tüm konularından**.", "sorular": [{"s": "Gerçek dünyayı görmeye devam ederken üzerine sanal nesneler eklenen teknoloji hangisidir?", "c": ["Artırılmış gerçeklik", "Sanal gerçeklik", "Bulut depolama", "Nesnelerin interneti"], "a": 0}, {"s": "Gözlük gerçek dünyayı tamamen kapatıyorsa bu hangi teknolojidir?", "a": "Sanal gerçeklik"}, {"s": "Artırılmış gerçekliğin kısaltması nedir?", "a": "AG (İngilizcesi AR)"}, {"s": "Sanal gerçekliğin kısaltması nedir?", "a": "SG (İngilizcesi VR)"}, {"s": "Boyama sayfasındaki resmin tablet ekranında üç boyutlu canlanması hangi teknolojiye örnektir?", "a": "Artırılmış gerçeklik"}, {"s": "Gözlükle sınıftan çıkmadan uzayı gezmek hangi teknolojiye örnektir?", "a": "Sanal gerçeklik"}, {"s": "Hangisi artırılmış gerçeklik örneğidir?", "c": ["Harita uygulamasında yola eklenen yön okları", "Sanal müze gezisi", "Uçuş simülatörü", "Sanal gerçeklik oyunu"], "a": 0}, {"s": "İlk sanal gerçeklik başlığı hangi yıl yapıldı?", "c": ["1968", "1993", "2007", "1946"], "a": 0}, {"s": "Sanal gerçeklik gözlüğü kullanırken başın dönerse ne yapmalısın?", "a": "Gözlüğü hemen çıkarıp dinlenmeliyim."}, {"s": "Sanal gerçeklik gözlüğünü nerede kullanmalıyız?", "a": "Bir yetişkinin gözetiminde, etrafı boş ve güvenli bir alanda."}, {"s": "Artırılmış gerçeklik için hangi araçlar kullanılabilir?", "a": "Telefon, tablet, akıllı gözlük"}, {"s": "Eskisinden farklı, yeni bir fikir ya da çözüm getiren anlamına gelen kelime nedir?", "a": "Yenilikçi"}, {"s": "Bir teknolojiyi “yenilikçi” yapan dört özellik nedir?", "a": "Yeni olması, çözüm üretmesi, fark yaratması, yaygınlaşması"}, {"s": "Dosyalarımızı internetteki sunucularda saklayıp her yerden açmamızı sağlayan teknoloji nedir?", "a": "Bulut depolama"}, {"s": "Akıllı saat ve akıllı bileklik hangi teknoloji grubundadır?", "c": ["Giyilebilir teknolojiler", "Bulut bilişim", "Sanal gerçeklik", "3B yazıcılar"], "a": 0}, {"s": "Eşyaların internete bağlanıp birbiriyle haberleşmesine ne denir?", "a": "Nesnelerin interneti"}, {"s": "İçinde pilot olmadan uçan hava aracına ne denir?", "a": "İnsansız hava aracı (İHA, dron)"}, {"s": "Bilgisayarların örneklerden öğrenerek tanıma ve karar verme işlerini yapabilmesine ne denir?", "a": "Yapay zekâ"}, {"s": "Giyilebilir teknolojiler bilgiyi hangi parçalar sayesinde toplar?", "a": "Algılayıcılar (sensörler)"}, {"s": "“İnovasyon” kelimesi yerine TDK hangi Türkçe kelimeyi önerir?", "a": "Yenileşim"}, {"s": "Akıllı telefon neden yenilikçi bir teknolojidir?", "a": "İletişim kurma biçimimizi tamamen değiştirdi; fotoğraf, harita, ders gibi pek çok işi bir arada yapar."}, {"s": "Hangisi yenilikçi bir bilişim teknolojisi değildir?", "c": ["Daktilo", "Artırılmış gerçeklik", "Bulut depolama", "Akıllı saat"], "a": 0}, {"s": "Robot yardımlı ameliyat hangi alana örnektir?", "c": ["Sağlık", "Eğlence", "Ulaşım", "İletişim"], "a": 0}, {"s": "Sürücüsüz araç denemeleri hangi alana örnektir?", "a": "Ulaşım"}, {"s": "Fabrikalardaki montaj robotları hangi alana örnektir?", "a": "Sanayi (üretim)"}, {"s": "Yapay zekâ ile anlık çeviri hangi alana örnektir?", "a": "İletişim"}, {"s": "Sanal gerçeklikle müze gezisi hangi alana örnektir?", "a": "Eğitim"}, {"s": "Müzik ve film öneren yapay zekâ hangi alana örnektir?", "a": "Eğlence"}, {"s": "Akıllı trafik ışıkları hangi alana örnektir?", "a": "Ulaşım"}, {"s": "Akıllı saatle nabız takibi hangi alana örnektir?", "a": "Sağlık"}, {"s": "Kargo taşıyan İHA’lar hangi alana örnektir?", "c": ["Ulaşım", "Sağlık", "Eğitim", "Eğlence"], "a": 0}, {"s": "Bir kavramı tanım, özellik, örnek ve örnek olmayanlarla inceleyen kavram kartının adı nedir?", "a": "Frayer modeli"}, {"s": "2022’de dünyada oluşan elektronik atığın yaklaşık ne kadarı geri dönüştürüldü?", "c": ["Beşte biri", "Tamamı", "Yarısı", "Hiçbiri"], "a": 0}, {"s": "İlk genel amaçlı elektronik bilgisayarlardan biri olan ENIAC hangi yıl yapıldı?", "c": ["1946", "1981", "1993", "2007"], "a": 0}, {"s": "ENIAC yaklaşık kaç ton ağırlığındaydı?", "a": "Yaklaşık 27 ton"}, {"s": "Kişisel bilgisayarlar evlere ve okullara hangi yıllarda girmeye başladı?", "a": "1980’lerin başında (1981)"}, {"s": "İlk cep telefonu görüşmesini 1973’te kim yaptı?", "a": "Martin Cooper"}, {"s": "1983’te satılan ilk cep telefonu yaklaşık ne kadar ağırdı?", "a": "Yaklaşık 1 kilogram"}, {"s": "Türkiye internete ilk kez hangi yıl, nereden bağlandı?", "c": ["1993, ODTÜ", "1969, İstanbul", "2001, İzmir", "1946, Ankara"], "a": 0}, {"s": "Olayları oldukları sıraya göre bir çizgi üzerinde gösteren şemaya ne denir?", "a": "Zaman çizelgesi"}, {"s": "ENIAC saniyede yaklaşık kaç toplama yapabiliyordu?", "a": "Yaklaşık 5.000"}, {"s": "Türkiye’nin ilk internet bağlantısının hızı neydi?", "a": "Saniyede 64 kilobit"}, {"s": "Eskiden yalnızca birkaç uzmanın kullandığı bilgisayarları bugün kimler kullanıyor?", "a": "Dünyada milyarlarca insan"}, {"s": "Bir çipe sığan transistör sayısının düzenli olarak arttığını fark eden mühendis kimdir?", "a": "Gordon Moore"}, {"s": "İlk bilgisayar programcısı olarak anılan kişi kimdir?", "c": ["Ada Lovelace", "Alan Turing", "Gordon Moore", "Martin Cooper"], "a": 0}, {"s": "Ada Lovelace notlarını hangi makine üzerine yazdı?", "a": "Charles Babbage’ın Analitik Makinesi"}, {"s": "Ada Lovelace, makinelerin bir gün neyle çalışabileceğini öngörmüştü?", "a": "Müzik ve resim gibi şeylerle"}, {"s": "“Makineler düşünebilir mi?” sorusunu 1950’de soran bilim insanı kimdir?", "a": "Alan Turing"}, {"s": "Turing’in önerdiği Taklit Oyunu bugün hangi adla bilinir?", "a": "Turing testi"}, {"s": "Bilişimin Nobel’i olarak anılan ödülün adı nedir?", "a": "Turing Ödülü"}, {"s": "Ada Lovelace Günü hangi ayda kutlanır?", "c": ["Ekim", "Ocak", "Mayıs", "Ağustos"], "a": 0}, {"s": "Ada Lovelace’ın onuruna adı verilen programlama dili hangisidir?", "a": "Ada"}, {"s": "Turing’in 1936’da tasarladığı, tüm bilgisayarların temeli sayılan hayalî makinenin adı nedir?", "a": "Turing makinesi"}, {"s": "“Moore yasası” neyi anlatır?", "a": "Bir çipe sığan transistör sayısının düzenli olarak (yaklaşık iki yılda bir) ikiye katlanmasını."}, {"s": "Alan Turing İkinci Dünya Savaşı’nda hangi işte çalıştı?", "a": "Gizli mesajların şifresini çözen ekipte"}, {"s": "Henüz doğrulanmamış ama bilgilere dayanarak ileri sürülen düşünceye ne denir?", "a": "Varsayım (hipotez)"}, {"s": "Bir şeyin tekrar eden, düzenli değişim biçimine ne denir?", "a": "Örüntü"}, {"s": "Bildiğimiz bilgilerden yola çıkarak yeni bir sonuca ulaşmaya ne denir?", "a": "Çıkarım"}, {"s": "Geleceği önceden kestirebilme ve ona göre hazırlanabilmeye ne denir?", "a": "Öngörü"}, {"s": "“Bilgisayarlar oda büyüklüğünden cep boyutuna geldi.” Bu hangi örüntüdür?", "c": ["Küçülme", "Ucuzlama", "Kişiselleşme", "Akıllanma"], "a": 0}, {"s": "Gelecek tahminlerini yazarken hangi ifadeleri kullanırız?", "a": "“Olabilir, bekleniyor, büyük olasılıkla”"}, {"s": "Gelecekte hızla büyümesi beklenen bir meslek söyleyin.", "a": "Yapay zekâ uzmanı, büyük veri uzmanı vb."}, {"s": "Bugün kullanırken gelecekteki insanların kaynaklarını tüketmeyen anlamına gelen kavram nedir?", "a": "Sürdürülebilir"}, {"s": "Teknolojinin toplumu hangi üç açıdan etkilediğini inceleriz?", "a": "Toplumsal, kültürel, ekonomik"}, {"s": "Bir konuyu iki grubun karşıt görüşlerden savunduğu tartışmaya ne denir?", "a": "Münazara"}, {"s": "Veri merkezlerinin çok elektrik kullanması hangi soruna yol açabilir?", "a": "Enerji tüketiminin artmasına ve çevrenin zarar görmesine"}]};
+document.title=OYUN.baslik;$('#baslik').textContent=OYUN.baslik;$('#sesyer').append(sesDugmesi());
+const sahne=$('#sahne'),RENK=['#EA580C','#2563EB','#16A34A','#7C3AED','#DB2777','#0E7490'],TAKIM=['Turuncu takım','Mor takım'];
+const ayar={mod:'takim'};let D=null;
+const SURPRIZ=[{t:'Şanslı kutu!',a:'+10 puan kazandınız!',p:10},{t:'Şanslı kutu!',a:'+10 puan kazandınız!',p:10},{t:'Pas kutusu',a:'Bu tur soru yok. Sıra diğer takıma geçiyor.',p:0},{t:'Süper kutu!',a:'+20 puan kazandınız!',p:20}];
+
+function skorCiz(){const k=$('#skor');k.innerHTML='';if(!D)return;
+  if(D.mod==='takim')[0,1].forEach(i=>k.append(el('span',{class:'cip '+(i?'b':'a')+(D.sira===i?' sira':'')},`${TAKIM[i]}: ${D.puan[i]}`)));
+  else k.append(el('span',{class:'cip'},'Doğru: '+D.puan[0]),el('span',{class:'cip'},'Kalan kutu: '+D.kutular.filter(x=>!x.acik).length));
+  k.append(el('button',{class:'kdugme',onclick:bitir},'Oyunu bitir'));}
+function giris(){D=null;skorCiz();sahne.innerHTML='';
+  sahne.append(el('section',{class:'ekran'},el('h2',{},OYUN.baslik),el('p',{html:md(OYUN.giris)}),
+    el('p',{html:md('Kutuların bazılarında **sürpriz** var: şanslı kutu, süper kutu, pas kutusu!')}),
+    el('div',{class:'etiket-s'},'Nasıl oynayalım?'),secimGrubu([['takim','İki takım','Sırayla kutu açın'],['tek','Tüm sınıf','Birlikte açın']],()=>ayar.mod,v=>ayar.mod=v),
+    el('button',{class:'dugme',onclick:basla},'Oyuna başla'),IMZA()));}
+function basla(){const n=24-SURPRIZ.length;const q=karistir(OYUN.sorular).slice(0,n).map(x=>({q:x}));
+  D={mod:ayar.mod,kutular:karistir([...q,...SURPRIZ.map(s=>({s}))]).map(x=>({...x,acik:false})),puan:[0,0],sira:0};skorCiz();izgara();}
+function izgara(){sahne.innerHTML='';const g=el('div',{class:'kutular'});
+  D.kutular.forEach((k,i)=>g.append(el('button',{class:'hediye',style:`background:${RENK[(i+Math.floor(i/6)*2)%6]}`,disabled:k.acik?'':null,onclick:()=>ac(i)},el('span',{},String(i+1)))));sahne.append(g);
+  if(D.kutular.every(k=>k.acik))setTimeout(bitir,400);}
+function ac(i){const k=D.kutular[i];k.acik=true;bip(660,.08);setTimeout(()=>bip(880,.12),90);sahne.innerHTML='';
+  const rk=RENK[(i+Math.floor(i/6)*2)%6];const kutu=el('section',{class:'kutu acik-kutu',style:`border-color:${rk}`});const bas=el('div',{class:'bas'},el('div',{class:'no',style:`background:${rk}`},String(i+1)));kutu.append(bas);
+  const devam=()=>{if(D.mod==='takim')D.sira=1-D.sira;skorCiz();izgara()};
+  if(k.s){bas.append(el('div',{class:'surpriz'},k.s.t));kutu.append(el('div',{class:'cevap',style:'text-align:center'},k.s.a));
+    if(k.s.p){D.puan[D.mod==='takim'?D.sira:0]+=D.mod==='takim'?k.s.p:0;dogruSes()}skorCiz();kutu.append(el('button',{class:'dugme lac',style:'align-self:center',onclick:devam},'Kutulara dön'));sahne.append(kutu);return;}
+  const q=k.q;bas.append(el('div',{class:'soru'},q.s));let sec=null;
+  if(q.c){sec=el('div',{class:'secenekler'},q.c.map((x,j)=>el('div',{},el('b',{},'ABCD'[j]),x)));kutu.append(sec);}
+  const alt=el('div',{class:'dugmeler'},el('button',{class:'dugme lac',onclick:goster},'Cevabı göster'));kutu.append(alt);sahne.append(kutu);
+  function goster(){alt.remove();bip(784,.15);if(q.c){sec.children[q.a].classList.add('dogru');kutu.append(el('div',{class:'cevap'},'Doğru cevap: '+'ABCD'[q.a]+') '+q.c[q.a]))}else kutu.append(el('div',{class:'cevap'},q.a));
+    const o=D.sira;kutu.append(D.mod==='takim'?el('div',{class:'dugmeler'},el('button',{class:'dugme '+(o?'mor':''),onclick:()=>{D.puan[o]+=10;dogruSes();devam()}},`${TAKIM[o]} bildi +10`),el('button',{class:'dugme '+(o?'':'mor'),onclick:()=>{D.puan[1-o]+=5;dogruSes();devam()}},`${TAKIM[1-o]} bildi +5`),el('button',{class:'dugme gri',onclick:devam},'Bilen olmadı'))
+      :el('div',{class:'dugmeler'},el('button',{class:'dugme yes',onclick:()=>{D.puan[0]++;devam()}},'Bildik'),el('button',{class:'dugme gri',onclick:devam},'Bilemedik')));}}
+function bitir(){if(!D)return;const p=el('section',{class:'ekran'});[523,659,784,1047].forEach((f,i)=>setTimeout(()=>bip(f,.22),i*140));
+  if(D.mod==='takim'){const[a,b]=D.puan;p.append(el('h2',{},a===b?'Berabere!':(a>b?TAKIM[0]:TAKIM[1])+' kazandı!'),el('p',{},`${TAKIM[0]}: ${a} puan · ${TAKIM[1]}: ${b} puan`));}
+  else p.append(el('h2',{},'Tebrikler sınıf!'),el('p',{},`${D.puan[0]} soruyu doğru bildiniz.`));
+  p.append(el('button',{class:'dugme',onclick:giris},'Yeni oyun'),IMZA());D=null;skorCiz();sahne.innerHTML='';sahne.append(p);}
+giris();
+</script>
+</body>
+</html>

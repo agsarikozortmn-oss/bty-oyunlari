@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gizli Resim: Resim Şifreleme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+:root{color-scheme:light;--lacivert:#1E3A8A;--turuncu:#EA580C;--mavi:#2563EB;--mavi-z:#DBEAFE;--yesil:#16A34A;--yesil-z:#DCFCE7;--kirmizi:#DC2626;--kirmizi-z:#FEE2E2;--mor:#7C3AED;--mor-z:#EDE9FE;--sari:#CA8A04;--sari-z:#FEF9C3;--pembe:#DB2777;--camgob:#0E7490;
+  --metin:#1E293B;--soluk:#64748B;--cizgi:#CBD5E1;--f-baslik:"Baloo 2","Trebuchet MS",system-ui,sans-serif;--f-govde:"Nunito","Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--metin);font-family:var(--f-govde);font-size:20px;padding:10px;-webkit-user-select:none;user-select:none;
+  background:radial-gradient(circle at 6% 10%,#FDE68A 0 110px,transparent 111px),radial-gradient(circle at 94% 92%,#FBCFE8 0 150px,transparent 151px),radial-gradient(circle at 96% 8%,#BFDBFE 0 80px,transparent 81px),radial-gradient(circle at 4% 94%,#BBF7D0 0 100px,transparent 101px),linear-gradient(135deg,#EEF2FF,#FDF4FF 55%,#ECFEFF)}
+h1,h2,h3{font-family:var(--f-baslik);margin:0;line-height:1.15}
+.kap{max-width:1500px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.ust{background:linear-gradient(90deg,#1E3A8A,#7C3AED 60%,#DB2777);color:#fff;border-radius:16px;padding:8px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;box-shadow:0 4px 14px rgba(124,58,237,.3)}
+.ust h1{font-size:clamp(24px,2.8vw,36px);flex:1 1 280px}
+.skor{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.cip{border-radius:12px;padding:4px 16px;font-family:var(--f-baslik);font-size:clamp(20px,2vw,28px);background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.35);font-variant-numeric:tabular-nums}
+.cip.a.sira{background:var(--turuncu);border-color:#fff}.cip.b.sira{background:var(--mor);border-color:#fff}
+.kdugme{font:inherit;font-weight:800;font-size:16px;border:2px solid rgba(255,255,255,.45);background:transparent;color:#fff;border-radius:10px;padding:5px 12px;cursor:pointer}
+.kutu{background:#fff;border-radius:24px;border:5px solid #C4B5FD;padding:20px 24px;box-shadow:0 4px 16px rgba(30,58,138,.1)}
+.dugme{font-family:var(--f-baslik);font-weight:800;font-size:clamp(22px,2.1vw,30px);border:0;border-radius:16px;padding:12px 28px;cursor:pointer;background:var(--turuncu);color:#fff;box-shadow:0 5px 0 #9A3412}
+.dugme:active{transform:translateY(2px);box-shadow:0 2px 0 #9A3412}
+.dugme.lac{background:var(--lacivert);box-shadow:0 5px 0 #172554}.dugme.yes{background:var(--yesil);box-shadow:0 5px 0 #14532D}
+.dugme.mor{background:var(--mor);box-shadow:0 5px 0 #4C1D95}.dugme.kir{background:var(--kirmizi);box-shadow:0 5px 0 #7F1D1D}.dugme.gri{background:#64748B;box-shadow:0 5px 0 #334155}
+.dugme:disabled{opacity:.45;cursor:default}
+button:focus-visible{outline:5px solid var(--turuncu);outline-offset:3px}
+.ekran{background:#fff;border:5px solid #C4B5FD;border-radius:26px;padding:24px;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.ekran h2{font-size:clamp(32px,4.2vw,56px);color:var(--lacivert)}
+.ekran p{margin:0;font-size:clamp(20px,2vw,26px);max-width:920px}
+.etiket-s{font-weight:800;color:var(--soluk);font-size:18px;letter-spacing:.06em;text-transform:uppercase}
+.secim{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.secim button{font:inherit;font-weight:800;font-size:21px;padding:10px 18px;border-radius:14px;border:3px solid var(--cizgi);background:#fff;color:var(--metin);cursor:pointer;min-width:160px}
+.secim button[aria-pressed="true"]{border-color:var(--turuncu);background:#FFEDD5;color:#9A3412}
+.secim small{display:block;font-weight:600;color:var(--soluk);font-size:15px}
+.cevap{background:var(--yesil-z);border:4px solid var(--yesil);border-radius:16px;padding:12px 18px;font-size:clamp(24px,2.6vw,36px);font-weight:800;color:#14532D;animation:gel .35s ease-out}
+.yanlis-k{background:var(--kirmizi-z);border:4px solid var(--kirmizi);border-radius:16px;padding:12px 18px;font-size:clamp(22px,2.3vw,32px);font-weight:800;color:#7F1D1D;animation:gel .35s ease-out}
+@keyframes gel{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes salla{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.salla{animation:salla .4s}
+.buyuk-ikon{font-size:72px;line-height:1}
+.not{font-size:18px;color:var(--soluk)}
+.hazirlayan{font-size:14px;color:#64748B;margin:4px 0 0}.hazirlayan b{color:#1E3A8A}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.seviyeler{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;width:100%}
+.seviyeler button{font:inherit;border:0;border-radius:22px;padding:18px;color:#fff;cursor:pointer;font-weight:800;font-size:20px;box-shadow:0 5px 0 rgba(0,0,0,.2)}
+.seviyeler b{display:block;font-family:var(--f-baslik);font-size:36px}
+.kural{background:var(--sari-z);border:4px solid var(--sari);border-radius:18px;padding:12px 18px;font-size:clamp(19px,1.9vw,25px);font-weight:700;text-align:left;max-width:1000px}
+.galeri{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;width:100%}
+.galeri button{font:inherit;border:5px solid var(--cizgi);border-radius:20px;background:#fff;padding:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;font-weight:800;font-size:21px;color:var(--lacivert)}
+.galeri button:hover{border-color:var(--mor)}
+.galeri .bitti{border-color:var(--yesil)}
+.galeri .soru{width:90px;height:90px;border-radius:12px;display:grid;place-items:center;font-family:var(--f-baslik);font-size:60px;color:#fff}
+.galeri canvas{width:90px;height:90px;image-rendering:pixelated;border-radius:8px;border:2px solid var(--cizgi)}
+.tur{font-size:15px;border-radius:999px;padding:2px 12px;color:#fff}
+.alan{display:flex;gap:18px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+.tablo{display:grid;gap:3px;background:#fff;border:6px solid #C4B5FD;border-radius:20px;padding:10px;touch-action:none;user-select:none}
+.no,.kod{display:flex;align-items:center;font-family:var(--f-baslik);font-weight:800;color:var(--lacivert);line-height:1}
+.no{justify-content:center;color:var(--soluk)}
+.kod{padding:0 10px;border-radius:10px;background:#F1F5F9;white-space:nowrap;letter-spacing:.02em}
+.kod.ok{background:var(--yesil-z);color:#15803D}
+.kod.hata{background:var(--kirmizi-z);color:#B91C1C}
+.kare{background:#fff;border:2px solid #CBD5E1;border-radius:4px;cursor:pointer}
+.kare.dolu{border-color:transparent}
+.tablo.salt .kare{cursor:default}
+.kod input{font:inherit;width:100%;border:0;background:transparent;color:inherit;outline:none;letter-spacing:.04em}
+.kod input::placeholder{color:#94A3B8}
+.yan{display:flex;flex-direction:column;gap:12px;max-width:330px}
+.yan h2{margin:0;font-family:var(--f-baslik);font-size:34px;color:var(--lacivert)}
+.ipucu{background:var(--sari-z);border:4px solid var(--sari);border-radius:16px;padding:10px 14px;font-weight:700;font-size:clamp(17px,1.6vw,21px)}
+.yan .dugme{font-size:20px;padding:10px 16px}
+.tamam{background:var(--yesil-z);border:4px solid var(--yesil);border-radius:16px;padding:12px 14px;font-weight:800;font-size:clamp(20px,2vw,26px);animation:gel .3s}
+.tamam b{display:block;font-family:var(--f-baslik);font-size:1.5em;color:#15803D}
+</style>
+</head>
+<body>
+<div class="kap">
+  <header class="ust"><h1>Gizli Resim: Resim Şifreleme</h1><div class="skor" id="skor"></div><span id="sesyer"></span></header>
+  <main id="sahne"></main>
+</div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const el=(t,o={},...c)=>{const e=document.createElement(t);Object.entries(o).forEach(([k,v])=>v==null||v===false?0:k==='class'?e.className=v:k==='html'?e.innerHTML=v:k.startsWith('on')?e[k]=v:e.setAttribute(k,v));c.flat().forEach(x=>x!=null&&x!==false&&e.append(x));return e};
+const md=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+const karistir=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let SES=true,AC=null;
+function bip(f,t=.15,tip='triangle'){if(!SES)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=tip;o.frequency.value=f;g.gain.setValueAtTime(.2,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+t);o.connect(g).connect(AC.destination);o.start();o.stop(AC.currentTime+t)}catch(e){}}
+const dogruSes=()=>{bip(784,.12);setTimeout(()=>bip(1047,.2),110)}, yanlisSes=()=>{bip(220,.25,'sawtooth')};
+const IMZA=()=>el('p',{class:'hazirlayan'},el('b',{},'Hazırlayan: Ayşegül SARIKOZ (BTY Dersi Öğretmeni)'),' · Türkkonut Ortaokulu');
+function sesDugmesi(){const b=el('button',{class:'kdugme','aria-pressed':'true'},'Ses: açık');b.onclick=()=>{SES=!SES;b.textContent='Ses: '+(SES?'açık':'kapalı');b.setAttribute('aria-pressed',String(SES))};return b}
+function secimGrubu(secenekler,deger,degis){const g=el('div',{class:'secim'});const yen=()=>g.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===String(deger()))));
+  secenekler.forEach(([v,ad,alt])=>g.append(el('button',{'data-v':v,onclick:()=>{degis(v);yen()}},ad,alt?el('small',{},alt):null)));yen();return g}
+
+$('#sesyer').append(sesDugmesi());
+const sahne=$('#sahne');
+// # boyalı kare, . beyaz kare
+const SEVIYE=[
+ {ad:'Kolay',renk:'#DC2626',acik:'6 × 6 kare · kodu çöz, resmi boya',resimler:[
+  {ad:'Artı işareti',p:['..##..','..##..','######','######','..##..','..##..']},
+  {ad:'Yukarı ok',p:['..##..','.####.','######','..##..','..##..','..##..']},
+  {ad:'Çerçeve',p:['######','#....#','#....#','#....#','#....#','######']},
+  {ad:'Merdiven',p:['#.....','##....','###...','####..','#####.','######']},
+  {ad:'Gülen yüz',p:['.#..#.','.#..#.','......','#....#','.#..#.','..##..']}]},
+ {ad:'Orta',renk:'#16A34A',acik:'8 × 8 kare · kodu çöz, resmi boya',resimler:[
+  {ad:'Çam ağacı',p:['...##...','..####..','.######.','..####..','.######.','########','...##...','...##...']},
+  {ad:'Bilgisayar',p:['########','#......#','#......#','#......#','########','...##...','..####..','........']},
+  {ad:'Yıldız',p:['...##...','...##...','########','.######.','..####..','.######.','.##..##.','##....##']},
+  {ad:'Zarf (e-posta)',p:['########','##....##','#.#..#.#','#..##..#','#......#','#......#','########','........']},
+  {ad:'Kedi',p:['#......#','##....##','########','#.#..#.#','########','###..###','.######.','..####..']}]},
+ {ad:'Zor',renk:'#2563EB',acik:'10 × 10 kare çöz · resmi koda çevir',resimler:[
+  {ad:'Robot',p:['...####...','...#..#...','.########.','.#.#..#.#.','.########.','...####...','.########.','.#.####.#.','...#..#...','..##..##..']},
+  {ad:'Roket',p:['....##....','...####...','...#..#...','...####...','...####...','..######..','.##.##.##.','.#..##..#.','....##....','...#..#...']},
+  {ad:'Fare',sifrele:true,p:['...##...','..#..#..','.##..##.','.######.','.######.','.######.','..####..','........']},
+  {ad:'Kupa',sifrele:true,p:['########','#.####.#','#.####.#','.######.','..####..','...##...','..####..','.######.']},
+  {ad:'Satranç tahtası',p:['#.#.#.#.#.','.#.#.#.#.#','#.#.#.#.#.','.#.#.#.#.#','#.#.#.#.#.','.#.#.#.#.#','#.#.#.#.#.','.#.#.#.#.#','#.#.#.#.#.','.#.#.#.#.#']},
+  {ad:'Gemi',sifrele:true,p:['....#.....','....##....','....###...','....####..','....#.....','##########','.########.','..######..','..........','#.#.#.#.#.']}]}
+];
+const biten=new Set();let D=null;
+// Dizi boyu kodu: ilk sayı beyaz; satır boyalıyla başlıyorsa 0
+function kodla(s){const o=[];let c='.',n=0;for(const ch of s){if(ch===c)n++;else{o.push(n);c=ch;n=1}}o.push(n);if(o.length>1&&o.at(-1)===0)o.pop();return o.filter((x,i)=>!(i===o.length-1&&x===0&&o.length>1));}
+const kodYazi=s=>kodla(s).join(', ');
+const sayilar=t=>(t.match(/\d+/g)||[]).map(Number);
+function minik(p,renk){const n=p.length,c=el('canvas',{width:n,height:n}),x=c.getContext('2d');p.forEach((s,y)=>[...s].forEach((ch,i)=>{x.fillStyle=ch==='#'?renk:'#fff';x.fillRect(i,y,1,1)}));return c;}
+
+function skorCiz(){const k=$('#skor');k.innerHTML='';if(D&&D.si!=null)k.append(el('span',{class:'cip'},`${SEVIYE[D.si].ad} · Biten: ${SEVIYE[D.si].resimler.filter((_,i)=>biten.has(D.si+'-'+i)).length} / ${SEVIYE[D.si].resimler.length}`),el('button',{class:'kdugme',onclick:()=>galeri(D.si)},'Resimler'));
+  if(D)k.append(el('button',{class:'kdugme',onclick:giris},'Seviyeler'));}
+function giris(){D=null;skorCiz();sahne.innerHTML='';
+  sahne.append(el('section',{class:'ekran'},el('h2',{},'Gizli Resim: Resim Şifreleme'),
+    el('p',{html:md('Bilgisayarlar resimleri **sayılarla** saklar. Kodları çöz, kareleri boya ve gizli resmi bul!')}),
+    el('div',{class:'kural',html:md('**Kural:** Her satırdaki **ilk sayı beyaz** kare sayısıdır. Sonra sırayla **boyalı, beyaz, boyalı…** diye devam eder. Satır boyalı kareyle başlıyorsa ilk sayı **0** yazılır.<br>Örnek: **2, 3, 1** → 2 beyaz, 3 boyalı, 1 beyaz')}),
+    el('div',{class:'seviyeler'},SEVIYE.map((s,i)=>el('button',{style:`background:${s.renk}`,onclick:()=>galeri(i)},el('b',{},s.ad),s.acik))),IMZA()));}
+function galeri(si){const S=SEVIYE[si];D={si};skorCiz();sahne.innerHTML='';
+  sahne.append(el('section',{class:'ekran'},el('h2',{},S.ad+' seviye'),el('p',{},'Bir gizli resim seç.'),
+    el('div',{class:'galeri'},S.resimler.map((r,i)=>{const b=biten.has(si+'-'+i);return el('button',{class:b?'bitti':'',onclick:()=>r.sifrele?sifrele(si,i):coz(si,i)},
+      b?minik(r.p,S.renk):el('div',{class:'soru',style:`background:${S.renk}`},'?'),b?r.ad:'Gizli resim '+(i+1),el('span',{class:'tur',style:`background:${r.sifrele?'#7C3AED':'#0E7490'}`},r.sifrele?'Şifrele':'Çöz'))})),IMZA()));}
+
+function boyutlar(n){const kodSutun=n>=10?190:n>=8?160:130;const boy=Math.floor(Math.min((innerHeight-150)/n,(innerWidth-kodSutun-480)/n))-3;return{boy:Math.max(26,Math.min(boy,72)),kodSutun};}
+function kur(si,ri,salt){const S=SEVIYE[si],r=S.resimler[ri],n=r.p.length,{boy,kodSutun}=boyutlar(n);
+  const t=el('div',{class:'tablo'+(salt?' salt':''),style:`grid-template-columns:${boy*.7}px ${kodSutun*(salt?1.25:1)}px repeat(${n},${boy}px);grid-auto-rows:${boy}px`});
+  const fs=Math.min(boy*.55,34);
+  return{S,r,n,t,fs,boy};}
+function coz(si,ri){const{S,r,n,t,fs}=kur(si,ri,false);const izgara=r.p.map(s=>[...s].map(()=>'.'));const canli=si<2;D={si,ri};skorCiz();sahne.innerHTML='';
+  const kodlar=[];
+  for(let y=0;y<n;y++){t.append(el('div',{class:'no',style:`font-size:${fs*.8}px`},String(y+1)));const k=el('div',{class:'kod',style:`font-size:${fs}px`},kodYazi(r.p[y]));kodlar.push(k);t.append(k);
+    for(let x=0;x<n;x++)t.append(el('div',{class:'kare','data-x':x,'data-y':y}));}
+  let boya=null;
+  const uygula=c=>{const x=+c.dataset.x,y=+c.dataset.y;if(izgara[y][x]===boya)return;izgara[y][x]=boya;c.classList.toggle('dolu',boya==='#');c.style.background=boya==='#'?S.renk:'#fff';bip(boya==='#'?620:420,.03);if(canli)satirKontrol(y);};
+  t.onpointerdown=e=>{const c=e.target.closest('.kare');if(!c)return;e.preventDefault();boya=izgara[+c.dataset.y][+c.dataset.x]==='#'?'.':'#';uygula(c);};
+  t.onpointermove=e=>{if(!boya)return;const h=document.elementFromPoint(e.clientX,e.clientY),c=h&&h.closest('.kare');if(c&&t.contains(c))uygula(c);};
+  addEventListener('pointerup',()=>boya=null);
+  const satirKontrol=y=>{const ok=izgara[y].join('')===r.p[y];kodlar[y].classList.toggle('ok',ok);kodlar[y].classList.remove('hata');if(izgara.every((s,i)=>s.join('')===r.p[i]))bitti();};
+  const yan=el('div',{class:'yan'},el('h2',{},'Gizli resim '+(ri+1)),
+    el('div',{class:'ipucu',html:md(canli?'Karelere dokunarak boya. Parmağını sürükleyerek birden çok kare boyayabilirsin. Doğru boyanan satırın kodu **yeşil** olur.':'Bu seviyede satırlar kendiliğinden yeşil olmaz. Bitirince **Kontrol et** düğmesine bas.')}),
+    el('div',{class:'ipucu',style:'background:#fff;border-color:var(--cizgi)',html:md('İlk sayı = **beyaz**, sonra boyalı, beyaz, boyalı…')}),
+    canli?null:el('button',{class:'dugme lac',onclick:()=>{let h=0;izgara.forEach((s,y)=>{const ok=s.join('')===r.p[y];kodlar[y].classList.toggle('ok',ok);kodlar[y].classList.toggle('hata',!ok);if(!ok)h++});h?yanlisSes():bitti()}},'Kontrol et'),
+    el('button',{class:'dugme gri',onclick:()=>coz(si,ri)},'Temizle'));
+  sahne.append(el('div',{class:'alan'},t,yan));
+  function bitti(){if(D.bitti)return;D.bitti=true;t.onpointerdown=null;t.onpointermove=null;biten.add(si+'-'+ri);skorCiz();[523,659,784,1047].forEach((f,i)=>setTimeout(()=>bip(f,.2),i*130));
+    $$('.kare',t).forEach(c=>{c.style.borderColor=c.classList.contains('dolu')?S.renk:'#fff';c.style.borderRadius='0'});t.style.gap='0';
+    yan.innerHTML='';yan.append(el('div',{class:'tamam'},el('b',{},'Buldun: '+r.ad+'!'),`Bu resim ${n*n} kareden oluşuyor ama kodu çok daha kısa. Bilgisayarlar da resimleri böyle küçültür.`),sonrakiDugmeler(si,ri));}}
+function sifrele(si,ri){const{S,r,n,t,fs}=kur(si,ri,true);D={si,ri};skorCiz();sahne.innerHTML='';const girdiler=[],kodlar=[];
+  for(let y=0;y<n;y++){t.append(el('div',{class:'no',style:`font-size:${fs*.8}px`},String(y+1)));
+    const inp=el('input',{type:'text',inputmode:'numeric',placeholder:'?, ?, ?','aria-label':`${y+1}. satırın kodu`});const k=el('div',{class:'kod',style:`font-size:${fs*.9}px`},inp);
+    inp.oninput=()=>{k.classList.remove('ok','hata')};inp.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();(girdiler[y+1]||girdiler[0]).focus()}};girdiler.push(inp);kodlar.push(k);t.append(k);
+    for(let x=0;x<n;x++){const d=r.p[y][x]==='#';t.append(el('div',{class:'kare'+(d?' dolu':''),style:d?`background:${S.renk}`:''}))}}
+  const yan=el('div',{class:'yan'},el('h2',{},r.ad),el('div',{class:'ipucu',html:md('Şimdi sen **şifrele!** Her satırın kodunu yaz. Sayıların arasına virgül koy.<br>Unutma: satır boyalıyla başlıyorsa ilk sayı **0**.')}),
+    el('button',{class:'dugme lac',onclick:kontrol},'Kontrol et'),
+    el('button',{class:'dugme mor',onclick:()=>{const y=girdiler.findIndex((g,i)=>sayilar(g.value).join()!==kodla(r.p[i]).join());if(y<0)return;girdiler[y].value=kodYazi(r.p[y]);kodlar[y].classList.add('ok');bip(660,.1);D.ipucu=(D.ipucu||0)+1}},'Bir satırı göster'));
+  sahne.append(el('div',{class:'alan'},t,yan));girdiler[0].focus();
+  function kontrol(){let h=0;girdiler.forEach((g,y)=>{const ok=sayilar(g.value).join()===kodla(r.p[y]).join();kodlar[y].classList.toggle('ok',ok);kodlar[y].classList.toggle('hata',!ok);if(!ok)h++});
+    if(h){yanlisSes();return}biten.add(si+'-'+ri);skorCiz();[523,659,784,1047].forEach((f,i)=>setTimeout(()=>bip(f,.2),i*130));girdiler.forEach(g=>g.disabled=true);
+    const top=r.p.reduce((a,s)=>a+kodla(s).length,0);
+    yan.innerHTML='';yan.append(el('div',{class:'tamam'},el('b',{},'Harika şifreledin!'),`${n*n} kareyi yalnızca ${top} sayıyla anlattın.`+(D.ipucu?` (${D.ipucu} satır ipucuyla)`:'')),
+      el('div',{class:'ipucu'},'Kodu bir arkadaşına oku, o da boş kâğıda resmi çizsin!'),sonrakiDugmeler(si,ri));}}
+function sonrakiDugmeler(si,ri){const S=SEVIYE[si],s=S.resimler.findIndex((_,i)=>i>ri&&!biten.has(si+'-'+i));
+  return el('div',{style:'display:flex;flex-direction:column;gap:10px'},s>=0?el('button',{class:'dugme',onclick:()=>S.resimler[s].sifrele?sifrele(si,s):coz(si,s)},'Sonraki resim →'):
+    si<2?el('button',{class:'dugme yes',onclick:()=>galeri(si+1)},'Sonraki seviye →'):null,el('button',{class:'dugme lac',onclick:()=>galeri(si)},'Resimler'));}
+giris();
+</script>
+</body>
+</html>

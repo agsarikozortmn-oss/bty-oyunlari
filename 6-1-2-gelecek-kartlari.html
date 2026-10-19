@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geleceği Tahmin Et</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+:root{color-scheme:light;--lacivert:#1E3A8A;--turuncu:#EA580C;--mavi:#2563EB;--mavi-z:#DBEAFE;--yesil:#16A34A;--yesil-z:#DCFCE7;--kirmizi:#DC2626;--kirmizi-z:#FEE2E2;--mor:#7C3AED;--mor-z:#EDE9FE;--sari:#CA8A04;--sari-z:#FEF9C3;--pembe:#DB2777;--camgob:#0E7490;
+  --metin:#1E293B;--soluk:#64748B;--cizgi:#CBD5E1;--f-baslik:"Baloo 2","Trebuchet MS",system-ui,sans-serif;--f-govde:"Nunito","Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--metin);font-family:var(--f-govde);font-size:20px;padding:10px;-webkit-user-select:none;user-select:none;
+  background:radial-gradient(circle at 6% 10%,#FDE68A 0 110px,transparent 111px),radial-gradient(circle at 94% 92%,#FBCFE8 0 150px,transparent 151px),radial-gradient(circle at 96% 8%,#BFDBFE 0 80px,transparent 81px),radial-gradient(circle at 4% 94%,#BBF7D0 0 100px,transparent 101px),linear-gradient(135deg,#EEF2FF,#FDF4FF 55%,#ECFEFF)}
+h1,h2,h3{font-family:var(--f-baslik);margin:0;line-height:1.15}
+.kap{max-width:1500px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.ust{background:linear-gradient(90deg,#1E3A8A,#7C3AED 60%,#DB2777);color:#fff;border-radius:16px;padding:8px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;box-shadow:0 4px 14px rgba(124,58,237,.3)}
+.ust h1{font-size:clamp(24px,2.8vw,36px);flex:1 1 280px}
+.skor{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.cip{border-radius:12px;padding:4px 16px;font-family:var(--f-baslik);font-size:clamp(20px,2vw,28px);background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.35);font-variant-numeric:tabular-nums}
+.cip.a.sira{background:var(--turuncu);border-color:#fff}.cip.b.sira{background:var(--mor);border-color:#fff}
+.kdugme{font:inherit;font-weight:800;font-size:16px;border:2px solid rgba(255,255,255,.45);background:transparent;color:#fff;border-radius:10px;padding:5px 12px;cursor:pointer}
+.kutu{background:#fff;border-radius:24px;border:5px solid #C4B5FD;padding:20px 24px;box-shadow:0 4px 16px rgba(30,58,138,.1)}
+.dugme{font-family:var(--f-baslik);font-weight:800;font-size:clamp(22px,2.1vw,30px);border:0;border-radius:16px;padding:12px 28px;cursor:pointer;background:var(--turuncu);color:#fff;box-shadow:0 5px 0 #9A3412}
+.dugme:active{transform:translateY(2px);box-shadow:0 2px 0 #9A3412}
+.dugme.lac{background:var(--lacivert);box-shadow:0 5px 0 #172554}.dugme.yes{background:var(--yesil);box-shadow:0 5px 0 #14532D}
+.dugme.mor{background:var(--mor);box-shadow:0 5px 0 #4C1D95}.dugme.kir{background:var(--kirmizi);box-shadow:0 5px 0 #7F1D1D}.dugme.gri{background:#64748B;box-shadow:0 5px 0 #334155}
+.dugme:disabled{opacity:.45;cursor:default}
+button:focus-visible{outline:5px solid var(--turuncu);outline-offset:3px}
+.ekran{background:#fff;border:5px solid #C4B5FD;border-radius:26px;padding:24px;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.ekran h2{font-size:clamp(32px,4.2vw,56px);color:var(--lacivert)}
+.ekran p{margin:0;font-size:clamp(20px,2vw,26px);max-width:920px}
+.etiket-s{font-weight:800;color:var(--soluk);font-size:18px;letter-spacing:.06em;text-transform:uppercase}
+.secim{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.secim button{font:inherit;font-weight:800;font-size:21px;padding:10px 18px;border-radius:14px;border:3px solid var(--cizgi);background:#fff;color:var(--metin);cursor:pointer;min-width:160px}
+.secim button[aria-pressed="true"]{border-color:var(--turuncu);background:#FFEDD5;color:#9A3412}
+.secim small{display:block;font-weight:600;color:var(--soluk);font-size:15px}
+.cevap{background:var(--yesil-z);border:4px solid var(--yesil);border-radius:16px;padding:12px 18px;font-size:clamp(24px,2.6vw,36px);font-weight:800;color:#14532D;animation:gel .35s ease-out}
+.yanlis-k{background:var(--kirmizi-z);border:4px solid var(--kirmizi);border-radius:16px;padding:12px 18px;font-size:clamp(22px,2.3vw,32px);font-weight:800;color:#7F1D1D;animation:gel .35s ease-out}
+@keyframes gel{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes salla{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.salla{animation:salla .4s}
+.buyuk-ikon{font-size:72px;line-height:1}
+.not{font-size:18px;color:var(--soluk)}
+.hazirlayan{font-size:14px;color:#64748B;margin:4px 0 0}.hazirlayan b{color:#1E3A8A}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.modlar{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%}
+.modlar button{font:inherit;border:0;border-radius:24px;padding:22px;color:#fff;cursor:pointer;text-align:left;box-shadow:0 6px 0 rgba(0,0,0,.2);font-size:21px;font-weight:700}
+.modlar b{display:block;font-family:var(--f-baslik);font-size:34px}
+.kart-alan{display:flex;flex-direction:column;gap:12px;min-height:calc(100vh - 110px);justify-content:center}
+.zaman-kart{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:stretch}
+.zk{border-radius:24px;padding:16px 20px;color:#fff;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.zk small{font-family:var(--f-baslik);font-size:clamp(22px,2.2vw,30px);opacity:.9}
+.zk p{margin:0;font-size:clamp(24px,2.5vw,36px);font-weight:800;line-height:1.25}
+.ok-isaret{display:grid;place-items:center;font-size:60px;color:var(--lacivert);font-weight:800}
+.tek-baslik{font-family:var(--f-baslik);font-size:clamp(34px,4vw,56px);color:var(--lacivert);text-align:center}
+.oruntuler{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.or{font:inherit;font-weight:800;font-size:clamp(22px,2.3vw,32px);border:5px solid var(--cizgi);border-radius:20px;background:#fff;padding:12px;cursor:pointer}
+.or small{display:block;font-size:.6em;font-weight:700;color:var(--soluk)}
+.or.dogru{border-color:var(--yesil);background:var(--yesil-z)}.or.yanlis{border-color:var(--kirmizi);background:var(--kirmizi-z)}
+.or:disabled{cursor:default;color:var(--metin)}
+.ongoru{background:linear-gradient(135deg,#EDE9FE,#E0F2FE);border:5px solid #A78BFA;border-radius:22px;padding:14px 20px;font-size:clamp(22px,2.3vw,32px);font-weight:700;animation:gel .3s}
+.ongoru b{color:var(--mor)}
+.cevir-kart{perspective:1400px;width:min(1000px,100%);align-self:center;height:min(36vh,300px);cursor:pointer}
+.cevir-ic{position:relative;width:100%;height:100%;transition:transform .7s;transform-style:preserve-3d}
+.cevir-kart.acik .cevir-ic{transform:rotateY(180deg)}
+.yuz{position:absolute;inset:0;border-radius:28px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.2)}
+.on{background:repeating-linear-gradient(45deg,#4F46E5 0 30px,#6366F1 30px 60px);color:#fff;font-family:var(--f-baslik);font-size:clamp(50px,7vw,100px)}
+.on small{font-size:.3em;font-family:var(--f-govde);font-weight:800}
+.arka{background:#fff;border:7px solid #A78BFA;transform:rotateY(180deg);gap:12px}
+.arka .yil{font-family:var(--f-baslik);font-size:clamp(28px,3vw,42px);color:#fff;border-radius:999px;padding:2px 24px}
+.arka p{margin:0;font-family:var(--f-baslik);font-size:clamp(28px,3.2vw,48px);color:var(--lacivert);line-height:1.2}
+.oylama{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.oy{font:inherit;border:0;border-radius:20px;color:#fff;font-weight:800;font-size:clamp(20px,2vw,28px);padding:6px;display:flex;justify-content:center;align-items:center;gap:14px;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.2)}
+.oy span{font-family:var(--f-baslik);font-size:1.5em}
+.etkiler{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.etki{border-radius:18px;padding:8px 12px;font-weight:700;font-size:clamp(17px,1.6vw,22px);border:4px solid;background:#fff}
+.etki b{display:block;font-family:var(--f-baslik);font-size:1.25em}
+.sayac{font-family:var(--f-baslik);font-size:44px;color:var(--mor)}
+@media (max-width:900px){.zaman-kart,.modlar,.oruntuler,.etkiler,.oylama{grid-template-columns:1fr}.ok-isaret{transform:rotate(90deg)}}
+</style>
+</head>
+<body>
+<div class="kap">
+  <header class="ust"><h1>Geleceği Tahmin Et</h1><div class="skor" id="skor"></div><span id="sesyer"></span></header>
+  <main id="sahne"></main>
+</div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const el=(t,o={},...c)=>{const e=document.createElement(t);Object.entries(o).forEach(([k,v])=>v==null||v===false?0:k==='class'?e.className=v:k==='html'?e.innerHTML=v:k.startsWith('on')?e[k]=v:e.setAttribute(k,v));c.flat().forEach(x=>x!=null&&x!==false&&e.append(x));return e};
+const md=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+const karistir=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let SES=true,AC=null;
+function bip(f,t=.15,tip='triangle'){if(!SES)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=tip;o.frequency.value=f;g.gain.setValueAtTime(.2,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+t);o.connect(g).connect(AC.destination);o.start();o.stop(AC.currentTime+t)}catch(e){}}
+const dogruSes=()=>{bip(784,.12);setTimeout(()=>bip(1047,.2),110)}, yanlisSes=()=>{bip(220,.25,'sawtooth')};
+const IMZA=()=>el('p',{class:'hazirlayan'},el('b',{},'Hazırlayan: Ayşegül SARIKOZ (BTY Dersi Öğretmeni)'),' · Türkkonut Ortaokulu');
+function sesDugmesi(){const b=el('button',{class:'kdugme','aria-pressed':'true'},'Ses: açık');b.onclick=()=>{SES=!SES;b.textContent='Ses: '+(SES?'açık':'kapalı');b.setAttribute('aria-pressed',String(SES))};return b}
+function secimGrubu(secenekler,deger,degis){const g=el('div',{class:'secim'});const yen=()=>g.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===String(deger()))));
+  secenekler.forEach(([v,ad,alt])=>g.append(el('button',{'data-v':v,onclick:()=>{degis(v);yen()}},ad,alt?el('small',{},alt):null)));yen();return g}
+
+$('#sesyer').append(sesDugmesi());
+const sahne=$('#sahne');
+const ORUNTU=[['Küçülme','boyut azalıyor'],['Hızlanma','işlem hızı artıyor'],['Yaygınlaşma','ucuzlayıp çok kişiye ulaşıyor'],['Bağlantı','her şey birbirine bağlanıyor'],['Akıllanma','makineler öğreniyor'],['Kişiselleşme','bize özel hâle geliyor']];
+const KART=[
+ {ad:'Bilgisayar',g:'1946 · ENIAC: 27 ton, bir salonu dolduruyordu.',b:'Bugün: Avucumuza sığan telefonlarda bilgisayar var.',o:0,v:'Bilgisayarlar gözlüğe, saate, hatta giysilere yerleşebilir.'},
+ {ad:'Cep telefonu',g:'1983: Yaklaşık 1 kg, yalnızca konuşma, 30 dakika pil.',b:'Bugün: 150–250 gram, fotoğraf, harita, video, internet.',o:0,v:'Telefonlar daha da incelip katlanabilir ya da gözlük gibi takılabilir.'},
+ {ad:'İşlem hızı',g:'1946: ENIAC saniyede yaklaşık 5.000 toplama yapıyordu.',b:'Bugün: Bir telefon saniyede milyarlarca işlem yapıyor.',o:1,v:'Bugün saatler süren hesaplar gelecekte saniyeler içinde yapılabilir.'},
+ {ad:'İnternet hızı',g:'1993: Türkiye’nin ilk bağlantısı saniyede 64 kilobitti.',b:'Bugün: Evlerdeki bağlantılar bundan binlerce kat hızlı.',o:1,v:'Filmler bir saniyede inebilir, sanal gerçeklikle görüntülü konuşmalar yaygınlaşabilir.'},
+ {ad:'Kullanıcılar',g:'Geçmiş: Bilgisayarları yalnızca birkaç uzman kullanabiliyordu.',b:'Bugün: Dünyada milyarlarca insan kullanıyor.',o:2,v:'Neredeyse herkes yapay zekâ ve robot kullanabilir hâle gelebilir.'},
+ {ad:'Fiyat',g:'Geçmiş: İlk bilgisayarlar ve telefonlar çok pahalıydı.',b:'Bugün: Pek çok aile bu cihazları alabiliyor.',o:2,v:'3B yazıcılar ve robotlar ucuzlayıp evlere girebilir.'},
+ {ad:'Akıllı nesneler',g:'Geçmiş: Yalnızca bilgisayarlar internete bağlanıyordu.',b:'Bugün: Saat, lamba, buzdolabı bile bağlı. 2024’te 18,8 milyar akıllı nesne vardı.',o:3,v:'2030’a kadar 40 milyar akıllı nesne olması bekleniyor; evler ve şehirler “konuşabilir”.'},
+ {ad:'İletişim',g:'Geçmiş: Mektup günler, telgraf saatler sürerdi.',b:'Bugün: Dünyanın öbür ucuyla anında görüntülü konuşuyoruz.',o:3,v:'Sanal gerçeklikle aynı odadaymış gibi buluşabiliriz.'},
+ {ad:'Makineler',g:'Geçmiş: Makineler yalnızca verilen komutu yapardı.',b:'Bugün: Yapay zekâ örneklerden öğreniyor, sohbet ediyor.',o:4,v:'Yapay zekâ doktorlara, öğretmenlere ve çiftçilere daha çok yardım edebilir.'},
+ {ad:'Çeviri',g:'Geçmiş: Başka bir dili anlamak için sözlük ve tercüman gerekirdi.',b:'Bugün: Yapay zekâ konuşmaları anında çevirebiliyor.',o:4,v:'Kulaklıklarla her dili anında anlayabiliriz.'},
+ {ad:'Öneriler',g:'Geçmiş: Herkes televizyonda aynı programı izlerdi.',b:'Bugün: Uygulamalar her kişiye farklı müzik ve video öneriyor.',o:5,v:'Ders kitapları bile her öğrenciye özel hâle gelebilir.'},
+ {ad:'Sağlık takibi',g:'Geçmiş: Nabız ve tansiyon yalnızca doktorda ölçülürdü.',b:'Bugün: Akıllı saatler her an ölçüp bize özel uyarı veriyor.',o:5,v:'Giyilebilir cihazlar hastalıkları ortaya çıkmadan fark edebilir.'}
+];
+const GELECEK=[
+ {yil:'2040',s:'Okula gitmeden sanal gerçeklik gözlüğüyle derse katılıyoruz.'},
+ {yil:'2035',s:'Evlerde ev işlerini yapan yardımcı robotlar var.'},
+ {yil:'2045',s:'Sürücüsüz otobüsler bizi okula götürüyor.'},
+ {yil:'2040',s:'Akıllı lensler gördüğümüz her şeyin bilgisini gözümüzün önüne getiriyor.'},
+ {yil:'2035',s:'Yapay zekâ her öğrenciye özel bir öğretmen yardımcısı oluyor.'},
+ {yil:'2050',s:'Kargolar insansız hava araçlarıyla evimizin balkonuna geliyor.'},
+ {yil:'2040',s:'3B yazıcılarla evde kendi oyuncağımızı ve yedek parçamızı üretiyoruz.'},
+ {yil:'2045',s:'Akıllı tarlalarda sensörler bitkilere ne zaman su verileceğine karar veriyor.'},
+ {yil:'2035',s:'Kasiyer yok: Marketten aldıklarımızı kameralar sayıyor, ödeme kendiliğinden yapılıyor.'},
+ {yil:'2050',s:'Elektronik atıkların tamamı toplanıp geri dönüştürülüyor.'}
+];
+const ETKI=[['Toplumsal','#2563EB','İnsan ilişkilerini ve iletişimi nasıl değiştirir?'],['Kültürel','#DB2777','Alışkanlıklarımızı ve eğlencemizi nasıl değiştirir?'],['Ekonomik','#16A34A','Fiyatları ve meslekleri nasıl etkiler?']];
+let D=null;
+function skorCiz(){const k=$('#skor');k.innerHTML='';if(!D)return;if(D.mod==='or')k.append(el('span',{class:'cip'},`Doğru örüntü: ${D.puan} / ${D.i+(D.cevap?1:0)}`));k.append(el('span',{class:'cip'},`Kart ${D.i+1} / ${D.liste.length}`),el('button',{class:'kdugme',onclick:giris},'Ana ekran'));}
+function giris(){D=null;clearInterval(giris.t);skorCiz();sahne.innerHTML='';
+  sahne.append(el('section',{class:'ekran'},el('h2',{},'Geleceği Tahmin Et'),el('p',{html:md('Bir bilim insanı gibi düşün: **geçmişe** bak, **örüntüyü** bul, **gelecek** için varsayımda bulun!')}),
+    el('div',{class:'modlar'},el('button',{style:'background:linear-gradient(135deg,#EA580C,#DB2777)',onclick:()=>basla('or')},el('b',{},'1. Örüntüyü Bul'),'Geçmiş ve bugünü karşılaştır, hangi örüntü olduğunu seç.'),
+      el('button',{style:'background:linear-gradient(135deg,#4F46E5,#0E7490)',onclick:()=>basla('gk')},el('b',{},'2. Gelecek Kartları'),'Kartı çevir, “olabilir mi?” diye oyla, etkilerini tartış.')),
+    el('p',{class:'not'},'Unutma: Gelecek tahminleri kesin bilgi değildir. “Olabilir, bekleniyor, büyük olasılıkla” gibi ifadeler kullanırız.'),IMZA()));}
+function basla(m){D={mod:m,liste:karistir(m==='or'?KART:GELECEK),i:0,puan:0};m==='or'?orKart():gKart();}
+function orKart(){const k=D.liste[D.i];D.cevap=false;skorCiz();sahne.innerHTML='';
+  const ors=el('div',{class:'oruntuler'},ORUNTU.map(([a,b],j)=>el('button',{class:'or',onclick:e=>sec(e.currentTarget,j)},a,el('small',{},b))));const alt=el('div',{style:'display:flex;flex-direction:column;gap:12px'});
+  sahne.append(el('section',{class:'kart-alan'},el('div',{class:'tek-baslik'},k.ad),el('div',{class:'zaman-kart'},el('div',{class:'zk',style:'background:#78716C'},el('small',{},'Geçmiş'),el('p',{},k.g)),el('div',{class:'ok-isaret'},'→'),el('div',{class:'zk',style:'background:#2563EB'},el('small',{},'Bugün'),el('p',{},k.b))),
+    el('div',{style:'font-family:var(--f-baslik);font-size:clamp(24px,2.5vw,34px);color:var(--mor);text-align:center'},'Hangi örüntüyü görüyorsun?'),ors,alt));
+  function sec(b,j){if(D.cevap)return;D.cevap=true;[...ors.children].forEach(x=>x.disabled=true);ors.children[k.o].classList.add('dogru');if(j===k.o){D.puan++;dogruSes()}else{b.classList.add('yanlis');yanlisSes()}skorCiz();
+    alt.append(el('div',{class:'ongoru',html:`<b>Olası varsayım:</b> ${k.v}`}),el('div',{style:'display:flex;gap:12px;justify-content:center;flex-wrap:wrap'},el('p',{class:'not',style:'margin:0;align-self:center'},'Sizin varsayımınız ne? Sınıfla paylaşın!'),
+      el('button',{class:'dugme lac',onclick:()=>{if(D.i+1>=D.liste.length)sonuc();else{D.i++;orKart()}}},D.i+1>=D.liste.length?'Sonucu gör':'Sonraki kart →')));
+    // ekrana sığması için örüntü düğmelerini küçült
+    ors.style.display='none';}}
+function sonuc(){[523,659,784,1047].forEach((f,i)=>setTimeout(()=>bip(f,.2),i*130));const p=D.puan,n=D.liste.length;sahne.innerHTML='';
+  sahne.append(el('section',{class:'ekran'},el('h2',{},p>=n-2?'Harika örüntü dedektifleri!':'Tebrikler!'),el('div',{style:'font-family:var(--f-baslik);font-size:clamp(44px,5vw,76px);color:var(--turuncu)'},`${p} / ${n}`),
+    el('p',{html:md('Örüntüler geleceği tahmin etmemize yardım eder. Gordon Moore da 1965’te bir örüntü fark etmiş ve tahmini yaklaşık 50 yıl doğru çıkmıştı!')}),
+    el('div',{style:'display:flex;gap:12px'},el('button',{class:'dugme',onclick:()=>basla('gk')},'Gelecek kartlarına geç'),el('button',{class:'dugme lac',onclick:giris},'Ana ekran')),IMZA()));D=null;skorCiz();}
+function gKart(){const k=D.liste[D.i];skorCiz();clearInterval(giris.t);sahne.innerHTML='';const oy=[0,0,0];
+  const kart=el('div',{class:'cevir-kart',onclick:()=>{if(!kart.classList.contains('acik')){kart.classList.add('acik');bip(520,.1);setTimeout(()=>alt.style.visibility='visible',500)}}},
+    el('div',{class:'cevir-ic'},el('div',{class:'yuz on'},'?',el('small',{},'Kartı çevirmek için dokun')),el('div',{class:'yuz arka'},el('span',{class:'yil',style:'background:var(--mor)'},k.yil+' yılında'),el('p',{},k.s))));
+  const sayac=el('span',{class:'sayac'});
+  const oylar=el('div',{class:'oylama'},[['Olabilir','#16A34A'],['Belki','#CA8A04'],['Zor','#DC2626']].map(([a,r],j)=>{const s=el('span',{},'0');return el('button',{class:'oy',style:`background:${r}`,onclick:()=>{oy[j]++;s.textContent=oy[j];bip(600+j*100,.05)}},a,s)}));
+  const etk=el('div',{class:'etkiler'},ETKI.map(([a,r,s])=>el('div',{class:'etki',style:`border-color:${r}`},el('b',{style:`color:${r}`},a),s)));
+  const alt=el('div',{style:'display:flex;flex-direction:column;gap:12px;visibility:hidden'},oylar,etk,el('div',{style:'display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap'},
+    el('button',{class:'dugme mor',onclick:()=>{let t=60;sayac.textContent=t;clearInterval(giris.t);giris.t=setInterval(()=>{t--;sayac.textContent=t>0?t:'Süre doldu!';if(t<=5&&t>0)bip(880,.05);if(t<=0)clearInterval(giris.t)},1000)}},'60 sn tartışma'),sayac,
+    el('button',{class:'dugme lac',onclick:()=>{if(D.i+1>=D.liste.length)giris();else{D.i++;gKart()}}},D.i+1>=D.liste.length?'Bitir':'Sonraki kart →')));
+  sahne.append(el('section',{class:'kart-alan'},kart,alt));}
+giris();
+</script>
+</body>
+</html>

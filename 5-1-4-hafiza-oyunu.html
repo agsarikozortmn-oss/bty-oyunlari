@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yapay Zekâ Kavramları</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Akıllı tahta için hafıza oyunu: üstte skor şeridi, ortada kart ızgarası, altta açıklama şeridi. Ders notlarıyla aynı renkler; bilinçli olarak tek (açık) tema. */
+:root{
+  color-scheme:light;
+  --lacivert:#1E3A8A;--turuncu:#EA580C;--mavi:#2563EB;--mavi-z:#DBEAFE;--yesil:#16A34A;--yesil-z:#DCFCE7;
+  --kirmizi:#DC2626;--kirmizi-z:#FEE2E2;--mor:#7C3AED;--sari:#CA8A04;--sari-z:#FEF9C3;
+  --metin:#1E293B;--soluk:#64748B;--cizgi:#CBD5E1;--zemin:#EEF2FF;
+  --f-baslik:"Baloo 2","Trebuchet MS",system-ui,sans-serif;--f-govde:"Nunito","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--zemin);color:var(--metin);font-family:var(--f-govde);font-size:16px;padding:10px;-webkit-user-select:none;user-select:none}
+h1,h2{font-family:var(--f-baslik);margin:0;line-height:1.15;text-wrap:balance}
+.kap{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.ust{background:var(--lacivert);color:#fff;border-radius:14px;padding:8px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.ust h1{font-size:clamp(20px,2.4vw,28px);flex:1 1 300px}
+.rozet{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:4px 14px;font-weight:800;font-variant-numeric:tabular-nums}
+.skor{display:flex;gap:10px;flex-wrap:wrap}
+.takim{border-radius:12px;padding:3px 14px;font-family:var(--f-baslik);font-size:18px;background:#fff;color:var(--soluk);border:3px solid var(--cizgi);font-variant-numeric:tabular-nums}
+.takim.sira{color:#fff;border-color:transparent}
+.takim.a.sira{background:var(--turuncu)} .takim.b.sira{background:var(--mor)}
+.izgara{display:grid;gap:10px;perspective:1200px;height:calc(100vh - 196px);min-height:300px}
+.kart{position:relative;min-height:0;border:0;padding:0;background:none;cursor:pointer;font:inherit;color:inherit}
+.kart .ic{position:absolute;inset:0;transition:transform .45s;transform-style:preserve-3d}
+.kart.acik .ic,.kart.bulundu .ic{transform:rotateY(180deg)}
+.yuz{position:absolute;inset:0;border-radius:16px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px}
+.arka{background:var(--lacivert);box-shadow:0 4px 0 #172554;background-image:radial-gradient(circle at 25% 25%,rgba(255,255,255,.12) 0 14%,transparent 15%),radial-gradient(circle at 75% 75%,rgba(255,255,255,.12) 0 14%,transparent 15%)}
+.arka span{font-family:var(--f-baslik);font-size:clamp(28px,4vw,46px);color:#fff;opacity:.9}
+.on{transform:rotateY(180deg);border:4px solid var(--lacivert);background:#fff;box-shadow:0 4px 0 var(--cizgi)}
+.on.kavram{background:var(--mavi-z);font-family:var(--f-baslik);font-size:clamp(18px,min(2.4vw,4vh),30px);font-weight:800;color:var(--lacivert)}
+.on.tanim{border-color:var(--turuncu);font-weight:700;font-size:clamp(13px,min(1.4vw,2.3vh),17px);line-height:1.25;padding:16px 8px 6px}
+.on .etk{position:absolute;top:6px;left:8px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--soluk);font-family:var(--f-govde)}
+.kart.bulundu .on{border-color:var(--yesil);background:var(--yesil-z);box-shadow:0 4px 0 var(--yesil)}
+.kart.yanlis .on{border-color:var(--kirmizi);background:var(--kirmizi-z)}
+.kart:focus-visible{outline:4px solid var(--turuncu);outline-offset:3px;border-radius:16px}
+.kart.bulundu{cursor:default}
+.mesaj{min-height:42px;border-radius:12px;padding:6px 16px;font-weight:700;font-size:17px;display:flex;align-items:center;background:#fff;border:2px solid var(--cizgi);color:var(--soluk)}
+.mesaj.iyi{background:var(--yesil-z);border-color:var(--yesil);color:#14532D}
+.mesaj.kotu{background:var(--kirmizi-z);border-color:var(--kirmizi);color:#7F1D1D}
+.alt{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.dugme{font-family:var(--f-baslik);font-weight:800;font-size:22px;border:0;border-radius:14px;padding:12px 26px;cursor:pointer;background:var(--turuncu);color:#fff;box-shadow:0 4px 0 #9A3412}
+.dugme:active{transform:translateY(2px);box-shadow:0 2px 0 #9A3412}
+.dugme.ikincil{background:var(--lacivert);box-shadow:0 4px 0 #172554;font-size:18px;padding:8px 18px}
+.dugme:focus-visible,.secim button:focus-visible{outline:4px solid var(--mavi);outline-offset:3px}
+.ekran{background:#fff;border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center}
+.ekran h2{font-size:clamp(28px,4vw,44px);color:var(--lacivert)}
+.ekran p{margin:0;font-size:20px;max-width:680px}
+.secim{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.secim button{font:inherit;font-weight:800;font-size:19px;padding:12px 20px;border-radius:14px;border:3px solid var(--cizgi);background:#fff;color:var(--metin);cursor:pointer;min-width:170px}
+.secim button[aria-pressed="true"]{border-color:var(--turuncu);background:#FFEDD5;color:#9A3412}
+.secim small{display:block;font-weight:600;color:var(--soluk);font-size:14px}
+.etiket-s{font-weight:800;color:var(--soluk);font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.yildiz{font-size:56px;letter-spacing:6px;color:var(--sari)}
+.uzman{background:var(--sari-z);border:3px solid var(--sari);border-radius:18px;padding:14px 22px;font-family:var(--f-baslik);font-size:26px;color:#854D0E}
+.not{font-size:14px;color:var(--soluk)}
+@media (max-width:700px){.izgara{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:none!important;height:auto}.kart{aspect-ratio:4/3}.on.tanim{font-size:12px}}
+@media (prefers-reduced-motion:reduce){.kart .ic{transition:none}}
+.hazirlayan{font-size:13px;color:#64748B;margin:4px 0 0}.hazirlayan b{color:#1E3A8A}
+
+/* --- iri yazı ve renkli tasarım (Ekim 2026) --- */
+body{background:radial-gradient(circle at 6% 10%,#FDE68A 0 110px,transparent 111px),radial-gradient(circle at 94% 92%,#FBCFE8 0 150px,transparent 151px),radial-gradient(circle at 96% 8%,#BFDBFE 0 80px,transparent 81px),linear-gradient(135deg,#EEF2FF,#FDF4FF 55%,#ECFEFF)!important;min-height:100vh}
+.ust{background:linear-gradient(90deg,#1E3A8A,#7C3AED 60%,#DB2777)!important}
+.ust h1{font-size:clamp(24px,2.8vw,36px)!important}
+.takim{font-size:clamp(20px,2vw,28px)!important;padding:4px 16px!important}
+.yuz.on{overflow:hidden;padding:20px 10px 8px!important;line-height:1.18!important}
+.on.kavram{font-size:40px;line-height:1.1!important}
+.on.tanim{font-weight:800!important;color:#1E293B}
+.on .etk{font-size:13px!important;top:4px!important}
+.arka span{font-size:clamp(40px,5vw,70px)!important}
+.kart:nth-child(6n+1) .arka{background-color:#EA580C!important;box-shadow:0 4px 0 #9A3412!important}
+.kart:nth-child(6n+2) .arka{background-color:#2563EB!important;box-shadow:0 4px 0 #1E3A8A!important}
+.kart:nth-child(6n+3) .arka{background-color:#16A34A!important;box-shadow:0 4px 0 #14532D!important}
+.kart:nth-child(6n+4) .arka{background-color:#7C3AED!important;box-shadow:0 4px 0 #4C1D95!important}
+.kart:nth-child(6n+5) .arka{background-color:#DB2777!important;box-shadow:0 4px 0 #9D174D!important}
+.kart:nth-child(6n+6) .arka{background-color:#0E7490!important;box-shadow:0 4px 0 #164E63!important}
+.mesaj{font-size:clamp(20px,2vw,26px)!important;min-height:52px!important}
+.dugme.ikincil{font-size:20px!important}
+.not{font-size:17px!important}
+.ekran p{font-size:22px!important}
+.secim button{font-size:21px!important}
+.secim small{font-size:15px!important}
+.etiket-s{font-size:18px!important}
+@media (max-width:700px){.on.tanim{font-size:16px}}
+</style>
+</head>
+<body>
+
+
+<div class="kap">
+  <header class="ust">
+    <h1>Yapay Zekâ Kavramları</h1>
+    <div class="skor" id="skor"></div>
+  </header>
+  <main id="sahne"></main>
+</div>
+
+<script>
+const OYUN = {"slug":"hafiza-5-1-4","dosya":"Yapay Zekâda Temel Kavram ve Özellikler - Hafıza Oyunu","baslik":"Yapay Zekâ Kavramları","giris":"Yapay zekâyla ilgili kavramları tanımlarıyla eşleştir.","takimlar":["Turuncu takım","Mor takım"],"ciftler":[["Yapay zekâ","Makinelerin insanlar gibi öğrenmesini ve karar vermesini sağlayan teknoloji."],["Doğal zekâ","İnsanlarda ve hayvanlarda bulunan zekâ."],["Veri","Yapay zekânın öğrenmek için kullandığı fotoğraf, ses, yazı ve sayılar."],["Algoritma","Bir işi yapmak için izlenen adımların sırası."],["Ön yargı","Eksik ya da tek taraflı verilerle öğrenen yapay zekânın verdiği adil olmayan sonuçlar."],["Etik","Yapay zekâyı dürüst, adil ve kimseye zarar vermeden kullanmak."],["Sesli asistan","Konuşmamızı anlayıp cevap veren yapay zekâ uygulaması."],["Öneri sistemi","Neleri sevdiğimizi tahmin edip öneri yapan yapay zekâ uygulaması."]]};
+const $=s=>document.querySelector(s), sahne=$('#sahne');
+const karistir=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let ayar={mod:'tek',cift:6}, D=null;
+
+function skorCiz(){
+  if(!D){ $('#skor').innerHTML=''; return; }
+  const kalan=D.ciftler.length-D.bulunan;
+  if(ayar.mod==='tek') $('#skor').innerHTML=`<span class="rozet">Deneme: ${D.deneme}</span><span class="rozet">Kalan çift: ${kalan}</span>`;
+  else $('#skor').innerHTML=`<span class="takim a ${D.sira===0?'sira':''}">${OYUN.takimlar[0]}: ${D.puan[0]}</span><span class="takim b ${D.sira===1?'sira':''}">${OYUN.takimlar[1]}: ${D.puan[1]}</span><span class="rozet">Kalan çift: ${kalan}</span>`;
+}
+
+function giris(){
+  D=null; skorCiz();
+  sahne.innerHTML=`<section class="ekran">
+    <h2>Eşini bul!</h2>
+    <p>${OYUN.giris} İki kart aç. Kavram ile tanımı eşleşirse kartlar açık kalır. Eşleşmezse kartlar yeniden kapanır. Hangi kartın nerede olduğunu aklında tut!</p>
+    <div class="etiket-s">Nasıl oynamak istersiniz?</div>
+    <div class="secim" id="mod">
+      <button data-v="tek">Tek oyuncu<small>En az denemede bitir</small></button>
+      <button data-v="takim">İki takım<small>Sırayla oynayın, en çok çifti bulan kazanır</small></button>
+    </div>
+    <div class="etiket-s">Kaç çift olsun?</div>
+    <div class="secim" id="cift">
+      <button data-v="6">Kolay<small>6 çift · 12 kart</small></button>
+      <button data-v="${OYUN.ciftler.length}">Zor<small>${OYUN.ciftler.length} çift · ${OYUN.ciftler.length*2} kart</small></button>
+    </div>
+    <button class="dugme" id="basla">Oyuna başla</button>
+    <p class="hazirlayan"><b>Hazırlayan: Ayşegül SARIKOZ (BTY Dersi Öğretmeni)</b> · Türkkonut Ortaokulu</p>
+  </section>`;
+  const bagla=(id,anahtar,sayi)=>{const g=$('#'+id);const yenile=()=>g.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v==String(ayar[anahtar]))));
+    g.querySelectorAll('button').forEach(b=>b.onclick=()=>{ayar[anahtar]=sayi?+b.dataset.v:b.dataset.v;yenile()});yenile();};
+  bagla('mod','mod',false); bagla('cift','cift',true);
+  $('#basla').onclick=basla;
+}
+
+function basla(){
+  const secilen=karistir(OYUN.ciftler).slice(0,ayar.cift);
+  const kartlar=karistir(secilen.flatMap((c,i)=>[{cift:i,tur:'kavram',yazi:c[0]},{cift:i,tur:'tanim',yazi:c[1]}]));
+  D={ciftler:secilen,kartlar,acik:[],kilit:false,bulunan:0,deneme:0,puan:[0,0],sira:0,hatasiz:0};
+  const sutun=kartlar.length<=12?4:4;
+  sahne.innerHTML=`<div style="display:flex;flex-direction:column;gap:8px">
+    <div class="izgara" id="izgara" style="grid-template-columns:repeat(${sutun},minmax(0,1fr));grid-template-rows:repeat(${Math.ceil(kartlar.length/sutun)},minmax(0,1fr))">
+      ${kartlar.map((k,i)=>`<button class="kart" data-i="${i}" aria-label="Kapalı kart ${i+1}">
+        <div class="ic"><div class="yuz arka"><span>?</span></div>
+        <div class="yuz on ${k.tur}"><span class="etk">${k.tur==='kavram'?'Kavram':'Tanım'}</span>${k.yazi}</div></div></button>`).join('')}
+    </div>
+    <div class="mesaj" id="mesaj" aria-live="polite">${ayar.mod==='takim'?OYUN.takimlar[0]+' başlıyor! İki kart aç.':'İki kart aç: Bir kavram ve onun tanımı.'}</div>
+    <div class="alt"><button class="dugme ikincil" id="bastan">Baştan başla</button><span class="not">Lacivert kartlar kavram, turuncu çerçeveli kartlar tanımdır.</span></div>
+  </div>`;
+  document.querySelectorAll('.kart').forEach(b=>b.onclick=()=>ac(b));
+  $('#bastan').onclick=giris; skorCiz();
+}
+
+function mesaj(t,s){const m=$('#mesaj'); m.textContent=t; m.className='mesaj '+(s||'')}
+
+function ac(b){
+  if(D.kilit||b.classList.contains('acik')||b.classList.contains('bulundu'))return;
+  const k=D.kartlar[+b.dataset.i];
+  b.classList.add('acik'); b.setAttribute('aria-label',(k.tur==='kavram'?'Kavram: ':'Tanım: ')+k.yazi);
+  D.acik.push(b);
+  if(D.acik.length<2){ mesaj(k.tur==='kavram'?`“${k.yazi}” kavramını açtın. Şimdi tanımını bul.`:'Bir tanım açtın. Şimdi bu tanımın kavramını bul.'); return; }
+  D.deneme++; D.kilit=true;
+  const [x,y]=D.acik.map(e=>D.kartlar[+e.dataset.i]);
+  const kavram=x.tur==='kavram'?x:y;
+  if(x.cift===y.cift && x.tur!==y.tur){
+    D.acik.forEach(e=>{e.classList.remove('acik');e.classList.add('bulundu')});
+    D.bulunan++; if(ayar.mod==='takim')D.puan[D.sira]++;
+    mesaj(`Doğru! ${kavram.yazi}: ${D.ciftler[kavram.cift][1]}${ayar.mod==='takim'?' · '+OYUN.takimlar[D.sira]+' bir kez daha oynuyor.':''}`,'iyi');
+    D.acik=[]; D.kilit=false; skorCiz();
+    if(D.bulunan===D.ciftler.length) setTimeout(sonuc,1400);
+  } else {
+    D.acik.forEach(e=>e.classList.add('yanlis'));
+    const neden=x.tur===y.tur?(x.tur==='kavram'?'İki kavram açtın. Bir kavram ile bir tanım eşleşir.':'İki tanım açtın. Bir kavram ile bir tanım eşleşir.'):'Bu tanım bu kavrama ait değil.';
+    if(ayar.mod==='takim') D.sira=1-D.sira;
+    mesaj(`${neden} Kartların yerini aklında tut!${ayar.mod==='takim'?' Sıra '+OYUN.takimlar[D.sira]+' takımında.':''}`,'kotu');
+    setTimeout(()=>{ D.acik.forEach(e=>{e.classList.remove('acik','yanlis');e.setAttribute('aria-label','Kapalı kart')}); D.acik=[]; D.kilit=false; skorCiz(); },1600);
+  }
+}
+
+function sonuc(){
+  const n=D.ciftler.length; let ust;
+  if(ayar.mod==='tek'){
+    const yildiz=D.deneme<=n*1.5?3:D.deneme<=n*2.2?2:1;
+    ust=`<h2>Tebrikler!</h2><div class="yildiz" aria-label="${yildiz} yıldız">${'★'.repeat(yildiz)}${'☆'.repeat(3-yildiz)}</div>
+      <p>${n} çiftin hepsini <b>${D.deneme}</b> denemede buldun. En iyi sonuç ${n} denemedir.</p>${yildiz===3?'<div class="uzman">Hafıza Şampiyonu!</div>':''}`;
+  } else {
+    const [a,b]=D.puan, t=OYUN.takimlar;
+    ust=`<h2>${a===b?'Berabere!':(a>b?t[0]:t[1])+' kazandı!'}</h2><p>${t[0]}: <b>${a}</b> çift · ${t[1]}: <b>${b}</b> çift</p>`;
+  }
+  sahne.innerHTML=`<section class="ekran">${ust}
+    <p class="not">Bulunan kavramlar: ${D.ciftler.map(c=>c[0]).join(' · ')}</p>
+    <button class="dugme" id="tekrar">Tekrar oyna</button></section>`;
+  $('#tekrar').onclick=giris; D=null; skorCiz();
+}
+giris();
+</script>
+<script>
+/* Kart yazılarını kartın boyutuna sığacak en büyük punto ile yaz */
+(function(){
+  function sigdir(){document.querySelectorAll('.yuz.on').forEach(function(e){
+    var kav=e.classList.contains('kavram'),lo=kav?16:13,hi=kav?64:40;
+    while(hi-lo>1){var m=(lo+hi)>>1;e.style.fontSize=m+'px';if(e.scrollHeight<=e.clientHeight+1&&e.scrollWidth<=e.clientWidth+1)lo=m;else hi=m;}
+    e.style.fontSize=lo+'px';});}
+  var bekle=null;function iste(){clearTimeout(bekle);bekle=setTimeout(sigdir,60);}
+  new MutationObserver(function(ms){if(ms.some(function(m){return m.addedNodes.length}))iste();}).observe(document.getElementById('sahne'),{childList:true,subtree:false});
+  window.addEventListener('resize',iste);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(iste);
+})();
+</script>
+
+</body>
+</html>

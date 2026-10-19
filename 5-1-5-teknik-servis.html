@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teknik Servis Ustası</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+:root{color-scheme:light;--lacivert:#1E3A8A;--turuncu:#EA580C;--mavi:#2563EB;--mavi-z:#DBEAFE;--yesil:#16A34A;--yesil-z:#DCFCE7;--kirmizi:#DC2626;--kirmizi-z:#FEE2E2;--mor:#7C3AED;--mor-z:#EDE9FE;--sari:#CA8A04;--sari-z:#FEF9C3;--pembe:#DB2777;--camgob:#0E7490;
+  --metin:#1E293B;--soluk:#64748B;--cizgi:#CBD5E1;--f-baslik:"Baloo 2","Trebuchet MS",system-ui,sans-serif;--f-govde:"Nunito","Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--metin);font-family:var(--f-govde);font-size:20px;padding:10px;-webkit-user-select:none;user-select:none;
+  background:radial-gradient(circle at 6% 10%,#FDE68A 0 110px,transparent 111px),radial-gradient(circle at 94% 92%,#FBCFE8 0 150px,transparent 151px),radial-gradient(circle at 96% 8%,#BFDBFE 0 80px,transparent 81px),radial-gradient(circle at 4% 94%,#BBF7D0 0 100px,transparent 101px),linear-gradient(135deg,#EEF2FF,#FDF4FF 55%,#ECFEFF)}
+h1,h2,h3{font-family:var(--f-baslik);margin:0;line-height:1.15}
+.kap{max-width:1500px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.ust{background:linear-gradient(90deg,#1E3A8A,#7C3AED 60%,#DB2777);color:#fff;border-radius:16px;padding:8px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;box-shadow:0 4px 14px rgba(124,58,237,.3)}
+.ust h1{font-size:clamp(24px,2.8vw,36px);flex:1 1 280px}
+.skor{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.cip{border-radius:12px;padding:4px 16px;font-family:var(--f-baslik);font-size:clamp(20px,2vw,28px);background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.35);font-variant-numeric:tabular-nums}
+.cip.a.sira{background:var(--turuncu);border-color:#fff}.cip.b.sira{background:var(--mor);border-color:#fff}
+.kdugme{font:inherit;font-weight:800;font-size:16px;border:2px solid rgba(255,255,255,.45);background:transparent;color:#fff;border-radius:10px;padding:5px 12px;cursor:pointer}
+.kutu{background:#fff;border-radius:24px;border:5px solid #C4B5FD;padding:20px 24px;box-shadow:0 4px 16px rgba(30,58,138,.1)}
+.dugme{font-family:var(--f-baslik);font-weight:800;font-size:clamp(22px,2.1vw,30px);border:0;border-radius:16px;padding:12px 28px;cursor:pointer;background:var(--turuncu);color:#fff;box-shadow:0 5px 0 #9A3412}
+.dugme:active{transform:translateY(2px);box-shadow:0 2px 0 #9A3412}
+.dugme.lac{background:var(--lacivert);box-shadow:0 5px 0 #172554}.dugme.yes{background:var(--yesil);box-shadow:0 5px 0 #14532D}
+.dugme.mor{background:var(--mor);box-shadow:0 5px 0 #4C1D95}.dugme.kir{background:var(--kirmizi);box-shadow:0 5px 0 #7F1D1D}.dugme.gri{background:#64748B;box-shadow:0 5px 0 #334155}
+.dugme:disabled{opacity:.45;cursor:default}
+button:focus-visible{outline:5px solid var(--turuncu);outline-offset:3px}
+.ekran{background:#fff;border:5px solid #C4B5FD;border-radius:26px;padding:24px;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.ekran h2{font-size:clamp(32px,4.2vw,56px);color:var(--lacivert)}
+.ekran p{margin:0;font-size:clamp(20px,2vw,26px);max-width:920px}
+.etiket-s{font-weight:800;color:var(--soluk);font-size:18px;letter-spacing:.06em;text-transform:uppercase}
+.secim{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.secim button{font:inherit;font-weight:800;font-size:21px;padding:10px 18px;border-radius:14px;border:3px solid var(--cizgi);background:#fff;color:var(--metin);cursor:pointer;min-width:160px}
+.secim button[aria-pressed="true"]{border-color:var(--turuncu);background:#FFEDD5;color:#9A3412}
+.secim small{display:block;font-weight:600;color:var(--soluk);font-size:15px}
+.cevap{background:var(--yesil-z);border:4px solid var(--yesil);border-radius:16px;padding:12px 18px;font-size:clamp(24px,2.6vw,36px);font-weight:800;color:#14532D;animation:gel .35s ease-out}
+.yanlis-k{background:var(--kirmizi-z);border:4px solid var(--kirmizi);border-radius:16px;padding:12px 18px;font-size:clamp(22px,2.3vw,32px);font-weight:800;color:#7F1D1D;animation:gel .35s ease-out}
+@keyframes gel{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes salla{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.salla{animation:salla .4s}
+.buyuk-ikon{font-size:72px;line-height:1}
+.not{font-size:18px;color:var(--soluk)}
+.hazirlayan{font-size:14px;color:#64748B;margin:4px 0 0}.hazirlayan b{color:#1E3A8A}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.oyun{display:grid;grid-template-columns:minmax(300px,38%) minmax(0,1fr);gap:16px;min-height:calc(100vh - 110px)}
+.sahne-k{background:linear-gradient(180deg,#E0F2FE,#F0F9FF);border:5px solid #7DD3FC;border-radius:22px;padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.sahne-k svg{width:100%;max-height:58vh}
+.durum{font-weight:800;font-size:clamp(20px,2vw,28px);border-radius:999px;padding:6px 18px;color:#fff}
+.sag{display:flex;flex-direction:column;gap:14px;justify-content:center}
+.vaka{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.vaka span{border-radius:999px;padding:6px 16px;font-weight:800;font-size:clamp(17px,1.6vw,22px);color:#fff}
+.sikayet{background:#fff;border:5px solid #FDBA74;border-radius:22px;padding:14px 20px;font-size:clamp(24px,2.5vw,36px);font-weight:800;color:var(--lacivert);position:relative}
+.sikayet small{display:block;font-size:.55em;color:var(--turuncu);font-family:var(--f-baslik)}
+.adim{font-family:var(--f-baslik);font-size:clamp(26px,2.8vw,40px);color:var(--mor)}
+.secenekler{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sec{font:inherit;text-align:left;font-weight:800;font-size:clamp(20px,2.1vw,30px);padding:12px 16px;border-radius:18px;border:5px solid var(--cizgi);background:#fff;cursor:pointer;min-height:76px}
+.sec:hover:not(:disabled){border-color:var(--mavi)}
+.sec:disabled{cursor:default;color:var(--metin)}
+.sec.dogru{border-color:var(--yesil);background:var(--yesil-z)}
+.sec.yanlis{border-color:var(--kirmizi);background:var(--kirmizi-z)}
+.sec.tehlike{border-color:#B91C1C;background:#FEE2E2}
+.uyari{background:#FEE2E2;border:4px solid #B91C1C;border-radius:16px;padding:10px 16px;font-size:clamp(20px,2vw,27px);font-weight:800;color:#7F1D1D;animation:gel .3s}
+.ipuclari{display:flex;gap:10px;flex-wrap:wrap}
+.yildiz{color:#F59E0B;font-size:34px;letter-spacing:3px}
+.vakalar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;width:100%}
+.vakalar button{font:inherit;border:0;border-radius:20px;color:#fff;padding:14px 8px;cursor:pointer;font-weight:800;font-size:clamp(18px,1.7vw,23px);min-height:110px;box-shadow:0 5px 0 rgba(0,0,0,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.vakalar button b{font-family:var(--f-baslik);font-size:1.6em}
+.vakalar button.cozuldu{opacity:.55}
+@media (max-width:900px){.oyun{grid-template-columns:1fr}.secenekler{grid-template-columns:1fr}.vakalar{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="kap">
+  <header class="ust"><h1>Teknik Servis Ustası</h1><div class="skor" id="skor"></div><span id="sesyer"></span></header>
+  <main id="sahne"></main>
+</div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const el=(t,o={},...c)=>{const e=document.createElement(t);Object.entries(o).forEach(([k,v])=>v==null||v===false?0:k==='class'?e.className=v:k==='html'?e.innerHTML=v:k.startsWith('on')?e[k]=v:e.setAttribute(k,v));c.flat().forEach(x=>x!=null&&x!==false&&e.append(x));return e};
+const md=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+const karistir=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let SES=true,AC=null;
+function bip(f,t=.15,tip='triangle'){if(!SES)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=tip;o.frequency.value=f;g.gain.setValueAtTime(.2,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+t);o.connect(g).connect(AC.destination);o.start();o.stop(AC.currentTime+t)}catch(e){}}
+const dogruSes=()=>{bip(784,.12);setTimeout(()=>bip(1047,.2),110)}, yanlisSes=()=>{bip(220,.25,'sawtooth')};
+const IMZA=()=>el('p',{class:'hazirlayan'},el('b',{},'Hazırlayan: Ayşegül SARIKOZ (BTY Dersi Öğretmeni)'),' · Türkkonut Ortaokulu');
+function sesDugmesi(){const b=el('button',{class:'kdugme','aria-pressed':'true'},'Ses: açık');b.onclick=()=>{SES=!SES;b.textContent='Ses: '+(SES?'açık':'kapalı');b.setAttribute('aria-pressed',String(SES))};return b}
+function secimGrubu(secenekler,deger,degis){const g=el('div',{class:'secim'});const yen=()=>g.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===String(deger()))));
+  secenekler.forEach(([v,ad,alt])=>g.append(el('button',{'data-v':v,onclick:()=>{degis(v);yen()}},ad,alt?el('small',{},alt):null)));yen();return g}
+
+$('#sesyer').append(sesDugmesi());
+const sahne=$('#sahne'),RENK=['#EA580C','#2563EB','#16A34A','#7C3AED','#DB2777','#0E7490','#CA8A04','#DC2626','#4F46E5','#059669'];
+// Her vaka: belirti (sahne durumu), şikâyet, adımlar [soru, [doğru, yanlış, yanlış, tehlikeli], açıklama]
+const VAKA=[
+ {ad:'Kapkara ekran',kim:'5-A sınıfından bir öğrenci',s:'Bilgisayarın kasası çalışıyor ama ekranda hiçbir şey yok!',d:'kara',adim:[
+  ['İlk olarak neyi kontrol edersin?',['Monitörün güç ışığı yanıyor mu?','Klavyeyi değiştiririm.','Fareyi sallarım.','Kasanın kapağını açarım.'],'Önce en basit şeye bakarız: monitör açık mı? Işığı yanmıyorsa güç düğmesine basılır.'],
+  ['Monitör açık ama hâlâ görüntü yok. Şimdi ne yaparsın?',['Görüntü kablosu takılı mı bakarım.','Hoparlörün sesini açarım.','Yazıcıyı kapatırım.','Kabloları ıslak bezle silerim.'],'Monitörü kasaya bağlayan görüntü kablosu (HDMI) gevşemiş olabilir. Yerine tam oturtulur.']]},
+ {ad:'Ses yok',kim:'Müzik öğretmenimiz',s:'Videoyu açtım ama hiç ses gelmiyor.',d:'sessiz',adim:[
+  ['İlk olarak neye bakarsın?',['Ekrandaki hoparlör simgesi sessizde mi?','Bilgisayarı hemen yeniden kurarım.','Monitörü kapatırım.','Hoparlörü söküp içine bakarım.'],'Ses simgesinin üzerinde çarpı varsa ses kapatılmıştır. Simgeye tıklayıp ses açılır.'],
+  ['Ses simgesi açık ama yine ses yok. Sonra?',['Hoparlör kablosu ve hoparlörün düğmesi açık mı bakarım.','Fareyi değiştiririm.','Ekran parlaklığını artırırım.','Prizdeki kabloyu ıslak elle çekerim.'],'Hoparlörün kendi düğmesi kapalı ya da kablosu çıkmış olabilir.']]},
+ {ad:'Fare çalışmıyor',kim:'6-B sınıfından bir öğrenci',s:'Fareyi oynatıyorum ama ekrandaki ok hiç kıpırdamıyor.',d:'fare',adim:[
+  ['Fare kablosuzsa ilk neyi kontrol edersin?',['Farenin pili bitmiş mi, düğmesi açık mı?','Monitörün kablosunu çıkarırım.','Klavyeyle yazı yazarım.','Fareyi suya batırıp temizlerim.'],'Kablosuz farelerin pili biter ya da altındaki açma düğmesi kapalı kalır.'],
+  ['Pil yeni ama fare yine çalışmıyor.',['USB alıcıyı başka bir USB girişine takarım.','Hoparlörü açarım.','Ekranı silerim.','Bilgisayarı yere vururum.'],'USB girişlerinden biri bozulmuş olabilir. Başka bir girişe takmak sorunu çözer.']]},
+ {ad:'Hep büyük harf',kim:'Türkçe öğretmenimiz',s:'Klavyede yazdığım her şey BÜYÜK HARFLE çıkıyor!',d:'caps',adim:[
+  ['Sebebi büyük olasılıkla nedir?',['Caps Lock tuşu açık kalmış.','Klavye bozulmuş, atmak lazım.','İnternet bağlantısı yok.','Klavyenin içine su dökmek gerekir.'],'Caps Lock tuşu açıkken tüm harfler büyük yazılır. Klavyedeki küçük ışık da yanar.'],
+  ['Ne yaparsın?',['Caps Lock tuşuna bir kez basıp kapatırım.','Shift tuşunu söker atarım.','Bilgisayarı kapatıp üç gün beklerim.','Klavyeyi tornavidayla açarım.'],'Caps Lock tuşuna bir kez basınca küçük harfe döneriz.']]},
+ {ad:'Program dondu',kim:'Bir öğrenci',s:'Resim programı dondu, hiçbir yere tıklayamıyorum.',d:'donmus',adim:[
+  ['İlk olarak ne yaparsın?',['Biraz beklerim, belki program çalışıyordur.','Fişi hemen çekerim.','Monitörü kapatıp açarım.','Kasayı sallarım.'],'Bazen program yoğun çalışıyordur ve birkaç saniye sonra düzelir. Sabırlı olmak önemlidir.'],
+  ['Bir dakika geçti, program hâlâ donuk.',['Pencereyi kapatır, olmazsa Sistem İzleyicisi ile programı sonlandırırım.','Fareyi değiştiririm.','Hoparlörün sesini kısarım.','Kasanın üstüne su dökerim.'],'Pardus’ta Sistem İzleyicisi’nden takılan program seçilip sonlandırılır. Sonra program yeniden açılır.'],
+  ['Bunun bir daha olmaması için ne yapabilirsin?',['Çalışmamı sık sık kaydederim.','Hiç kaydetmem.','Bilgisayarı hiç kapatmam.','Daha çok program açarım.'],'Sık kaydetmek (Ctrl + S) program donsa bile emeğimizin kaybolmasını önler.']]},
+ {ad:'İnternet yok',kim:'Okul müdürümüz',s:'İnternet sayfaları açılmıyor, “Bağlantı yok” yazıyor.',d:'internet',adim:[
+  ['İlk neye bakarsın?',['Ekrandaki ağ (Wi-Fi) simgesine bakarım.','Yazıcıyı açarım.','Fareyi temizlerim.','Modemi söküp içini açarım.'],'Ağ simgesi bağlantının olup olmadığını gösterir. Wi-Fi kapalıysa açılır.'],
+  ['Wi-Fi açık ama yine internet yok.',['Diğer bilgisayarlarda da internet var mı diye bakar, öğretmenime haber veririm.','Bilgisayarı yeniden kurarım.','Klavyeyi değiştiririm.','Okulun ana kablolarını kendim çekerim.'],'Hiçbir bilgisayarda internet yoksa sorun okul ağındadır. Bunu yetişkinler çözer.']]},
+ {ad:'Yazıcı yazmıyor',kim:'Rehber öğretmenimiz',s:'Belgeyi yazdırdım ama yazıcıdan hiçbir şey çıkmadı.',d:'yazici',adim:[
+  ['İlk neyi kontrol edersin?',['Yazıcı açık mı, kâğıdı var mı?','Monitörü kapatırım.','Ses simgesine bakarım.','Yazıcının içine elimi sokarım.'],'Yazıcının ışığı yanmıyorsa açılır. Kâğıt tepsisi boşsa kâğıt konur.'],
+  ['Yazıcı açık, kâğıdı var. Sonra?',['Yazdırırken doğru yazıcının seçili olup olmadığına bakarım.','Belgeyi silerim.','Fareyi değiştiririm.','Yazıcıyı sallarım.'],'Okulda birden çok yazıcı olabilir. Yazdır penceresinde doğru yazıcı seçilmelidir.']]},
+ {ad:'Çok yavaş',kim:'Bir öğrenci',s:'Bilgisayar kaplumbağa gibi yavaş çalışıyor.',d:'yavas',adim:[
+  ['İlk ne yaparsın?',['Kullanmadığım programları ve sekmeleri kapatırım.','Daha çok program açarım.','Monitörü değiştiririm.','Kasaya tekme atarım.'],'Aynı anda çok fazla program açıksa RAM bellek dolar ve bilgisayar yavaşlar.'],
+  ['Hâlâ yavaş. Sonra?',['Çalışmalarımı kaydedip bilgisayarı yeniden başlatırım.','Fişi çekerim.','Klavyeyi temizlerim.','Kasanın havalandırma deliklerini bantla kapatırım.'],'Yeniden başlatmak belleği temizler. Kaydetmeden kapatmak ise emeğimizi kaybettirir.']]},
+ {ad:'Dosya açılmıyor',kim:'Bir öğrenci',s:'Arkadaşımın gönderdiği “odev.odt” dosyası açılmıyor.',d:'dosya',adim:[
+  ['.odt uzantılı dosya ne tür bir dosyadır?',['Kelime işlemci belgesi (yazı)','Müzik dosyası','Video dosyası','Virüs dosyası'],'.odt açık belge biçiminde bir yazı dosyasıdır.'],
+  ['Hangi programla açarsın?',['LibreOffice Writer ile açarım.','Hesap makinesiyle açarım.','Resim programıyla açarım.','Dosyanın adını “oyun.exe” yaparım.'],'Pardus’ta .odt dosyaları LibreOffice Writer ile açılır.']]},
+ {ad:'Hiç açılmıyor',kim:'Bir öğretmen',s:'Güç düğmesine basıyorum ama bilgisayar hiç açılmıyor.',d:'kapali',adim:[
+  ['İlk neyi kontrol edersin?',['Güç kablosu prize ve kasaya takılı mı?','Klavyeyi değiştiririm.','Ses simgesine bakarım.','Kasayı açıp parçaları sökerim.'],'Kablolar gevşemiş ya da çıkmış olabilir. Prizin anahtarı da açık olmalıdır.'],
+  ['Kablolar takılı ama bilgisayar yine açılmıyor.',['Bilgisayara dokunmadan öğretmenime haber veririm.','Kasanın içine kendim bakarım.','Kabloyu kesip yeniden bağlarım.','Prize metal bir şey sokarım.'],'Elektrikle ilgili sorunlar tehlikelidir. Bunları mutlaka yetişkinler ve teknik servis çözer.']]}
+];
+function sahneSvg(d,cozuldu){const ekran=cozuldu?'#38BDF8':{kara:'#0F172A',kapali:'#0F172A'}[d]||'#38BDF8';
+  let ic='';const yaz=(t,y,c='#fff',s=26)=>`<text x="200" y="${y}" text-anchor="middle" font-family="Baloo 2,Nunito,sans-serif" font-weight="800" font-size="${s}" fill="${c}">${t}</text>`;
+  if(cozuldu)ic=`<circle cx="200" cy="120" r="46" fill="#FDE047"/><circle cx="184" cy="110" r="6" fill="#1E293B"/><circle cx="216" cy="110" r="6" fill="#1E293B"/><path d="M178 132 Q200 152 222 132" stroke="#1E293B" stroke-width="6" fill="none" stroke-linecap="round"/>`+yaz('Sorun çözüldü!',200,'#fff',28);
+  else if(d==='kara')ic=yaz('?',140,'#334155',90);
+  else if(d==='kapali')ic='';
+  else if(d==='sessiz')ic=`<path d="M150 100 h24 l30 -26 v92 l-30 -26 h-24z" fill="#fff"/><path d="M226 96 l40 40 M266 96 l-40 40" stroke="#EF4444" stroke-width="10" stroke-linecap="round"/>`;
+  else if(d==='fare')ic=`<path d="M190 90 l0 70 l18 -16 l14 30 l12 -6 l-14 -28 l24 -2z" fill="#fff" stroke="#1E293B" stroke-width="4"/>`+yaz('?',100,'#FDE047',44);
+  else if(d==='caps')ic=yaz('MERHABA ÖĞRETMENİM',110,'#fff',26)+yaz('BUGÜN HAVA ÇOK GÜZEL',150,'#fff',26);
+  else if(d==='donmus')ic=`<rect x="110" y="70" width="180" height="120" rx="8" fill="#fff"/><rect x="110" y="70" width="180" height="22" rx="8" fill="#94A3B8"/><circle cx="200" cy="140" r="26" fill="none" stroke="#CBD5E1" stroke-width="8"/><path d="M200 114 a26 26 0 0 1 26 26" stroke="#7C3AED" stroke-width="8" fill="none"/>`+yaz('Yanıt vermiyor',210,'#fff',22);
+  else if(d==='internet')ic=`<path d="M150 120 q50 -50 100 0 M165 135 q35 -32 70 0 M180 150 q20 -16 40 0" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round"/><circle cx="200" cy="165" r="7" fill="#fff"/><path d="M160 90 l80 90" stroke="#EF4444" stroke-width="9" stroke-linecap="round"/>`+yaz('Bağlantı yok',212,'#fff',24);
+  else if(d==='yazici')ic=`<rect x="150" y="100" width="100" height="56" rx="10" fill="#fff"/><rect x="166" y="76" width="68" height="26" fill="#E2E8F0"/><rect x="166" y="150" width="68" height="20" fill="#E2E8F0"/>`+yaz('Yazdırılıyor...',205,'#fff',24);
+  else if(d==='yavas')ic=`<ellipse cx="200" cy="140" rx="54" ry="34" fill="#16A34A"/><path d="M160 140 q40 -50 80 0" fill="#22C55E" stroke="#14532D" stroke-width="4"/><circle cx="262" cy="146" r="14" fill="#86EFAC"/>`+yaz('Yükleniyor %3',205,'#fff',24);
+  else if(d==='dosya')ic=`<path d="M170 70 h44 l22 22 v80 h-66z" fill="#fff"/><path d="M214 70 v22 h22" fill="#CBD5E1"/>`+yaz('odev.odt',200,'#fff',26)+yaz('?',150,'#2563EB',40);
+  return `<svg viewBox="0 0 400 330" aria-hidden="true"><rect x="40" y="20" width="320" height="220" rx="18" fill="#1E293B"/><rect x="56" y="36" width="288" height="188" rx="8" fill="${ekran}"/>${ic}
+  <rect x="180" y="240" width="40" height="40" fill="#475569"/><rect x="120" y="278" width="160" height="16" rx="8" fill="#334155"/>
+  <circle cx="338" cy="228" r="5" fill="${d==='kara'&&!cozuldu?'#F97316':d==='kapali'&&!cozuldu?'#334155':'#22C55E'}"/></svg>`;}
+
+let D=null;
+function skorCiz(){const k=$('#skor');k.innerHTML='';if(!D)return;k.append(el('span',{class:'cip'},`Usta puanı: ${D.puan}`),el('span',{class:'cip'},`Çözülen: ${D.cozulen.size} / ${VAKA.length}`),el('button',{class:'kdugme',onclick:liste},'Vakalar'));}
+function giris(){D=null;skorCiz();sahne.innerHTML='';
+  sahne.append(el('section',{class:'ekran'},el('h2',{},'Teknik Servis Ustası'),el('div',{html:sahneSvg('kara',true),style:'width:min(360px,60vw)'}),
+    el('p',{html:md('Okulumuzdaki bilgisayarlarda **arızalar** var! Her vakada belirtiyi incele ve sorunu adım adım çöz. Önce **en basit** kontrolü yapmayı unutma. Tehlikeli seçeneklere dikkat!')}),
+    el('button',{class:'dugme',onclick:()=>{D={puan:0,cozulen:new Set()};liste()}},'Servise başla'),IMZA()));}
+function liste(){skorCiz();sahne.innerHTML='';
+  sahne.append(el('section',{class:'ekran'},el('h2',{},'Bugünkü servis kayıtları'),el('p',{},'Bir vaka seç.'),
+    el('div',{class:'vakalar'},VAKA.map((v,i)=>el('button',{class:D.cozulen.has(i)?'cozuldu':'',style:`background:${RENK[i]}`,onclick:()=>vaka(i,0,0)},el('b',{},String(i+1)),v.ad,D.cozulen.has(i)?'✓ Çözüldü':''))),
+    D.cozulen.size===VAKA.length?el('div',{class:'cevap',style:'text-align:center'},`Bütün arızaları çözdün! Toplam usta puanın: ${D.puan}`):null,IMZA()));}
+function vaka(vi,ai,hata){const v=VAKA[vi],[soru,sec,acik]=v.adim[ai];sahne.innerHTML='';
+  const svg=el('div',{html:sahneSvg(v.d,false),style:'width:100%'});
+  const sol=el('section',{class:'sahne-k'},svg,el('span',{class:'durum',style:'background:var(--kirmizi)'},'Arıza: '+v.ad));
+  const secK=el('div',{class:'secenekler'}),geri=el('div',{style:'display:flex;flex-direction:column;gap:10px'});
+  karistir(sec.map((t,k)=>({t,k}))).forEach(o=>secK.append(el('button',{class:'sec',onclick:e=>sec_(e.currentTarget,o.k)},o.t)));
+  const sag=el('section',{class:'sag'},el('div',{class:'vaka'},el('span',{style:`background:${RENK[vi]}`},`Vaka ${vi+1}`),el('span',{style:'background:var(--mor)'},`Adım ${ai+1} / ${v.adim.length}`)),
+    el('div',{class:'sikayet'},el('small',{},v.kim+' diyor ki:'),'“'+v.s+'”'),el('div',{class:'adim'},soru),secK,geri);
+  sahne.append(el('div',{class:'oyun'},sol,sag));
+  function sec_(b,k){if(k===0){[...secK.children].forEach(x=>x.disabled=true);b.classList.add('dogru');dogruSes();
+      const son=ai+1>=v.adim.length;geri.append(el('div',{class:'cevap'},'Doğru! '+acik));
+      if(son){const p=Math.max(1,3-hata);if(!D.cozulen.has(vi)){D.puan+=p*10;D.cozulen.add(vi)}svg.innerHTML=sahneSvg(v.d,true);sol.querySelector('.durum').style.background='var(--yesil)';sol.querySelector('.durum').textContent='Sorun çözüldü!';
+        [523,659,784,1047].forEach((f,i)=>setTimeout(()=>bip(f,.2),i*120));skorCiz();
+        geri.append(el('div',{class:'yildiz'},'★'.repeat(p)+'☆'.repeat(3-p)),el('button',{class:'dugme lac',style:'align-self:flex-start',onclick:liste},'Sonraki vaka'));}
+      else geri.append(el('button',{class:'dugme lac',style:'align-self:flex-start',onclick:()=>vaka(vi,ai+1,hata)},'Sonraki adım →'));}
+    else{b.disabled=true;hata++;yanlisSes();b.classList.add(k===3?'tehlike':'yanlis');geri.querySelector('.uyari')?.remove();
+      geri.prepend(el('div',{class:'uyari'},k===3?'DUR! Bu tehlikeli. Bilgisayara ya da sana zarar verebilir. Böyle durumlarda bir yetişkine haber ver.':'Bu sorunu çözmez. Tekrar düşün: hangisi belirtiyle ilgili?'));}}}
+giris();
+</script>
+</body>
+</html>
