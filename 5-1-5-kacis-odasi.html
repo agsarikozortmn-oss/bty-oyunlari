@@ -91,7 +91,7 @@ button:focus-visible{outline:5px solid var(--turuncu);outline-offset:3px}
 </div>
 <script>
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const el=(t,o={},...c)=>{const e=document.createElement(t);Object.entries(o).forEach(([k,v])=>k==='class'?e.className=v:k==='html'?e.innerHTML=v:k.startsWith('on')?e[k]=v:e.setAttribute(k,v));c.flat().forEach(x=>x!=null&&x!==false&&e.append(x));return e};
+const el=(t,o={},...c)=>{const e=document.createElement(t);Object.entries(o).forEach(([k,v])=>v==null||v===false?0:k==='class'?e.className=v:k==='html'?e.innerHTML=v:k.startsWith('on')?e[k]=v:e.setAttribute(k,v));c.flat().forEach(x=>x!=null&&x!==false&&e.append(x));return e};
 const md=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
 const karistir=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 let SES=true,AC=null;

@@ -87,6 +87,7 @@ document.title=OYUN.baslik;$('#baslik').textContent=OYUN.baslik;$('#sesyer').app
 const sahne=$('#sahne'),RENK=['#EA580C','#2563EB','#16A34A','#7C3AED','#DB2777','#0E7490','#CA8A04','#DC2626','#4F46E5','#059669'];
 const ayar={zor:'orta',mod:'kelime'};let D=null;
 const ABC='ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ';
+const goster=s=>s.toLocaleUpperCase('tr').replace(/Â/g,'A').replace(/Î/g,'İ').replace(/Û/g,'U');
 const UP=s=>s.toLocaleUpperCase('tr').replace(/Â/g,'A').replace(/Î/g,'İ').replace(/Û/g,'U').replace(/[^A-ZÇĞIİÖŞÜ]/g,'');
 
 function skorCiz(){const k=$('#skor');k.innerHTML='';if(!D)return;k.append(el('span',{class:'cip'},`Bulunan: ${D.bul} / ${D.kel.length}`),el('span',{class:'cip',id:'sure'},'00:00'),el('button',{class:'kdugme',onclick:giris},'Konulara dön'));}
@@ -100,7 +101,7 @@ function yerlestir(kel,N,yonler){for(let deneme=0;deneme<200;deneme++){const G=A
     for(const k of [...kel].sort((a,b)=>b.k.length-a.k.length)){let kondu=false;
       for(let t=0;t<300&&!kondu;t++){const[dx,dy]=yonler[Math.floor(Math.random()*yonler.length)],L=k.k.length;
         const x=Math.floor(Math.random()*N),y=Math.floor(Math.random()*N),xs=x+dx*(L-1),ys=y+dy*(L-1);if(xs<0||xs>=N||ys<0||ys>=N)continue;
-        let uy=true;for(let i=0;i<L;i++){const c=G[y+dy*i][x+dx*i];if(c&&c!==k.k[i]){uy=false;break}}if(!uy)continue;
+        let uy=true,bos=0;for(let i=0;i<L;i++){const c=G[y+dy*i][x+dx*i];if(!c)bos++;else if(c!==k.k[i]){uy=false;break}}if(!uy||!bos)continue;
         for(let i=0;i<L;i++)G[y+dy*i][x+dx*i]=k.k[i];yer.push({k,x,y,dx,dy});kondu=true;}
       if(!kondu){ok=false;break}}
     if(ok){for(const r of G)for(let i=0;i<N;i++)if(!r[i])r[i]=ABC[Math.floor(Math.random()*ABC.length)];return{G,yer}}}return null;}
@@ -115,7 +116,7 @@ function basla(ki){const K=OYUN.konular[ki],ad=ayar.zor;
   const boy=Math.floor(Math.min(innerHeight-150,innerWidth*.6)/N)-3;
   sahne.innerHTML='';const iz=el('div',{class:'izgara',style:`grid-template-columns:repeat(${N},${boy}px);grid-auto-rows:${boy}px`});
   for(let y=0;y<N;y++)for(let x=0;x<N;x++)iz.append(el('div',{class:'harf','data-x':x,'data-y':y,style:`font-size:${boy*.62}px`},s.G[y][x]));
-  const liste=el('aside',{class:'liste'},el('h3',{},K.ad),kel.map((k,i)=>{const d=el('div',{class:'kel'+(ayar.mod==='ipucu'?' ipucu':''),'data-i':i});d.append(ayar.mod==='ipucu'?k.t:k.ham.toLocaleUpperCase('tr'));return d}));
+  const liste=el('aside',{class:'liste'},el('h3',{},K.ad),kel.map((k,i)=>{const d=el('div',{class:'kel'+(ayar.mod==='ipucu'?' ipucu':''),'data-i':i});d.append(ayar.mod==='ipucu'?k.t:goster(k.ham));return d}));
   sahne.append(el('div',{class:'alan'},iz,liste));baglaIzgara(iz);}
 
 const hucre=(x,y)=>$(`.harf[data-x="${x}"][data-y="${y}"]`);
@@ -132,10 +133,10 @@ function baglaIzgara(iz){let a=null,surukle=false,son=null;
     if(surukle&&yol&&yol.length>1)kontrol(yol);else if(!surukle){D.secBas=a;hucre(a.x,a.y).classList.add('bas');}
     a=null;});}
 function kontrol(yol){const s=yol.map(p=>D.G[p.y][p.x]).join(''),r=[...s].reverse().join('');
-  const i=D.kel.findIndex(k=>!k.ok&&(k.k===s||k.k===r)&&D.yer.some(y=>y.k===k&&((y.x===yol[0].x&&y.y===yol[0].y)||(y.x===yol.at(-1).x&&y.y===yol.at(-1).y))));
+  const i=D.kel.findIndex(k=>!k.ok&&(k.k===s||k.k===r));
   if(i<0){yanlisSes();return}
   const k=D.kel[i];k.ok=true;D.bul++;const rk=RENK[i%RENK.length];yol.forEach(p=>{const h=hucre(p.x,p.y);h.classList.add('bulundu');h.style.background=rk});
-  const kd=$(`.kel[data-i="${i}"]`);kd.classList.add('ok');kd.style.background=rk;if(kd.classList.contains('ipucu'))kd.append(el('span',{class:'kc'},k.ham.toLocaleUpperCase('tr')));
+  const kd=$(`.kel[data-i="${i}"]`);kd.classList.add('ok');kd.style.background=rk;if(kd.classList.contains('ipucu'))kd.append(el('span',{class:'kc'},goster(k.ham)));
   dogruSes();skorCiz();if(D.bul===D.kel.length)setTimeout(bitti,700);}
 function bitti(){clearInterval(giris.t);const t=Math.floor((Date.now()-D.bas)/1000);[523,659,784,1047].forEach((f,i)=>setTimeout(()=>bip(f,.2),i*130));
   const ki=D.ki;sahne.innerHTML='';sahne.append(el('section',{class:'ekran'},el('h2',{},'Harika! Bütün kelimeleri buldun!'),

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hücre Avı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+:root{color-scheme:light;--lacivert:#1E3A8A;--turuncu:#EA580C;--mavi:#2563EB;--mavi-z:#DBEAFE;--yesil:#16A34A;--yesil-z:#DCFCE7;--kirmizi:#DC2626;--kirmizi-z:#FEE2E2;--mor:#7C3AED;--mor-z:#EDE9FE;--sari:#CA8A04;--sari-z:#FEF9C3;--pembe:#DB2777;--camgob:#0E7490;
+  --metin:#1E293B;--soluk:#64748B;--cizgi:#CBD5E1;--f-baslik:"Baloo 2","Trebuchet MS",system-ui,sans-serif;--f-govde:"Nunito","Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--metin);font-family:var(--f-govde);font-size:20px;padding:10px;-webkit-user-select:none;user-select:none;
+  background:radial-gradient(circle at 6% 10%,#FDE68A 0 110px,transparent 111px),radial-gradient(circle at 94% 92%,#FBCFE8 0 150px,transparent 151px),radial-gradient(circle at 96% 8%,#BFDBFE 0 80px,transparent 81px),radial-gradient(circle at 4% 94%,#BBF7D0 0 100px,transparent 101px),linear-gradient(135deg,#EEF2FF,#FDF4FF 55%,#ECFEFF)}
+h1,h2,h3{font-family:var(--f-baslik);margin:0;line-height:1.15}
+.kap{max-width:1500px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.ust{background:linear-gradient(90deg,#1E3A8A,#7C3AED 60%,#DB2777);color:#fff;border-radius:16px;padding:8px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;box-shadow:0 4px 14px rgba(124,58,237,.3)}
+.ust h1{font-size:clamp(24px,2.8vw,36px);flex:1 1 280px}
+.skor{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.cip{border-radius:12px;padding:4px 16px;font-family:var(--f-baslik);font-size:clamp(20px,2vw,28px);background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.35);font-variant-numeric:tabular-nums}
+.cip.a.sira{background:var(--turuncu);border-color:#fff}.cip.b.sira{background:var(--mor);border-color:#fff}
+.kdugme{font:inherit;font-weight:800;font-size:16px;border:2px solid rgba(255,255,255,.45);background:transparent;color:#fff;border-radius:10px;padding:5px 12px;cursor:pointer}
+.kutu{background:#fff;border-radius:24px;border:5px solid #C4B5FD;padding:20px 24px;box-shadow:0 4px 16px rgba(30,58,138,.1)}
+.dugme{font-family:var(--f-baslik);font-weight:800;font-size:clamp(22px,2.1vw,30px);border:0;border-radius:16px;padding:12px 28px;cursor:pointer;background:var(--turuncu);color:#fff;box-shadow:0 5px 0 #9A3412}
+.dugme:active{transform:translateY(2px);box-shadow:0 2px 0 #9A3412}
+.dugme.lac{background:var(--lacivert);box-shadow:0 5px 0 #172554}.dugme.yes{background:var(--yesil);box-shadow:0 5px 0 #14532D}
+.dugme.mor{background:var(--mor);box-shadow:0 5px 0 #4C1D95}.dugme.kir{background:var(--kirmizi);box-shadow:0 5px 0 #7F1D1D}.dugme.gri{background:#64748B;box-shadow:0 5px 0 #334155}
+.dugme:disabled{opacity:.45;cursor:default}
+button:focus-visible{outline:5px solid var(--turuncu);outline-offset:3px}
+.ekran{background:#fff;border:5px solid #C4B5FD;border-radius:26px;padding:24px;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.ekran h2{font-size:clamp(32px,4.2vw,56px);color:var(--lacivert)}
+.ekran p{margin:0;font-size:clamp(20px,2vw,26px);max-width:920px}
+.etiket-s{font-weight:800;color:var(--soluk);font-size:18px;letter-spacing:.06em;text-transform:uppercase}
+.secim{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.secim button{font:inherit;font-weight:800;font-size:21px;padding:10px 18px;border-radius:14px;border:3px solid var(--cizgi);background:#fff;color:var(--metin);cursor:pointer;min-width:160px}
+.secim button[aria-pressed="true"]{border-color:var(--turuncu);background:#FFEDD5;color:#9A3412}
+.secim small{display:block;font-weight:600;color:var(--soluk);font-size:15px}
+.cevap{background:var(--yesil-z);border:4px solid var(--yesil);border-radius:16px;padding:12px 18px;font-size:clamp(24px,2.6vw,36px);font-weight:800;color:#14532D;animation:gel .35s ease-out}
+.yanlis-k{background:var(--kirmizi-z);border:4px solid var(--kirmizi);border-radius:16px;padding:12px 18px;font-size:clamp(22px,2.3vw,32px);font-weight:800;color:#7F1D1D;animation:gel .35s ease-out}
+@keyframes gel{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes salla{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.salla{animation:salla .4s}
+.buyuk-ikon{font-size:72px;line-height:1}
+.not{font-size:18px;color:var(--soluk)}
+.hazirlayan{font-size:14px;color:#64748B;margin:4px 0 0}.hazirlayan b{color:#1E3A8A}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.modlar{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%}
+.modlar button{font:inherit;border:0;border-radius:24px;padding:22px;color:#fff;cursor:pointer;text-align:left;box-shadow:0 6px 0 rgba(0,0,0,.2);font-size:20px;font-weight:700}
+.modlar b{display:block;font-family:var(--f-baslik);font-size:32px}
+.oyun{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+.gorev{background:#fff;border:5px solid #C4B5FD;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:14px;text-align:center}
+.gorev .soru{font-family:var(--f-baslik);font-size:clamp(26px,2.4vw,34px);color:var(--lacivert);line-height:1.2}
+.gorev .hedef{font-family:var(--f-baslik);font-size:clamp(64px,7vw,104px);color:var(--turuncu);line-height:1}
+.siklar{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.siklar button{font-family:var(--f-baslik);font-size:clamp(30px,3vw,44px);font-weight:800;border:4px solid var(--cizgi);background:#fff;border-radius:16px;padding:8px;cursor:pointer;color:var(--metin)}
+.siklar button.dogru{background:var(--yesil-z)!important;border-color:var(--yesil)!important;color:#14532D}
+.hc.dogru{background:var(--yesil-z)!important;box-shadow:inset 0 0 0 4px var(--yesil);color:#14532D}
+.siklar button.yanlis{background:var(--kirmizi-z)!important;border-color:var(--kirmizi)!important}
+.hc.yanlis{background:var(--kirmizi-z)!important;box-shadow:inset 0 0 0 4px var(--kirmizi)}
+.calc{background:#fff;border-radius:18px;border:4px solid #86EFAC;padding:10px;overflow:auto}
+.adkutu{display:flex;gap:8px;align-items:center;margin-bottom:8px;font-family:var(--f-baslik);font-size:24px}
+.adkutu span{min-height:1.4em;border:2px solid var(--cizgi);border-radius:8px;padding:0 14px;min-width:120px;background:#F8FAFC}
+.izg{display:grid;gap:0;border-left:1px solid #94A3B8;border-top:1px solid #94A3B8}
+.izg>div{border-right:1px solid #94A3B8;border-bottom:1px solid #94A3B8;display:grid;place-items:center;font-size:24px;font-weight:800;min-height:clamp(36px,5.4vh,58px)}
+.bas{background:#E2E8F0;color:#334155;font-family:var(--f-baslik);font-size:clamp(20px,2vw,28px)!important}
+.bas.vurgu{background:#86EFAC;color:#14532D}
+.hc{background:#fff;cursor:pointer;font-size:clamp(26px,2.6vw,40px)!important}
+.hc:hover{background:#F0FDF4}
+.hc.isaret{background:#FDE68A}
+.hc.aralik{background:#BFDBFE}
+.hc.etkin{outline:4px solid #111827;outline-offset:-4px}
+.ilerleme{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.ilerleme i{width:22px;height:22px;border-radius:50%;background:#E2E8F0}.ilerleme i.d{background:var(--yesil)}.ilerleme i.y{background:var(--kirmizi)}.ilerleme i.s{background:var(--turuncu)}
+@media (max-width:900px){.oyun{grid-template-columns:1fr}.modlar{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="kap">
+  <header class="ust"><h1>Hücre Avı</h1><div class="skor" id="skor"></div><span id="sesyer"></span></header>
+  <main id="sahne"></main>
+</div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const el=(t,o={},...c)=>{const e=document.createElement(t);Object.entries(o).forEach(([k,v])=>v==null||v===false?0:k==='class'?e.className=v:k==='html'?e.innerHTML=v:k.startsWith('on')?e[k]=v:e.setAttribute(k,v));c.flat().forEach(x=>x!=null&&x!==false&&e.append(x));return e};
+const md=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+const karistir=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let SES=true,AC=null;
+function bip(f,t=.15,tip='triangle'){if(!SES)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=tip;o.frequency.value=f;g.gain.setValueAtTime(.2,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+t);o.connect(g).connect(AC.destination);o.start();o.stop(AC.currentTime+t)}catch(e){}}
+const dogruSes=()=>{bip(784,.12);setTimeout(()=>bip(1047,.2),110)}, yanlisSes=()=>{bip(220,.25,'sawtooth')};
+const IMZA=()=>el('p',{class:'hazirlayan'},el('b',{},'Hazırlayan: Ayşegül SARIKOZ (BTY Dersi Öğretmeni)'),' · Türkkonut Ortaokulu');
+function sesDugmesi(){const b=el('button',{class:'kdugme','aria-pressed':'true'},'Ses: açık');b.onclick=()=>{SES=!SES;b.textContent='Ses: '+(SES?'açık':'kapalı');b.setAttribute('aria-pressed',String(SES))};return b}
+function secimGrubu(secenekler,deger,degis){const g=el('div',{class:'secim'});const yen=()=>g.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===String(deger()))));
+  secenekler.forEach(([v,ad,alt])=>g.append(el('button',{'data-v':v,onclick:()=>{degis(v);yen()}},ad,alt?el('small',{},alt):null)));yen();return g}
+
+$('#sesyer').append(sesDugmesi());
+const sahne=$('#sahne');
+const SUT='ABCDEFGH',SAT=8,TUR=10;
+const rnd=n=>Math.floor(Math.random()*n);
+const ad=(c,r)=>SUT[c]+(r+1);
+const SEKIL=['★','●','▲','■','♥'];
+let D=null, ayar={mod:'bul'};
+function skorCiz(){const k=$('#skor');k.innerHTML='';if(!D)return;k.append(el('span',{class:'cip'},`Puan: ${D.puan}`),el('span',{class:'cip'},`Soru ${Math.min(D.i+1,TUR)} / ${TUR}`),el('button',{class:'kdugme',onclick:giris},'Ana ekran'));}
+function giris(){D=null;skorCiz();sahne.innerHTML='';
+  sahne.append(el('section',{class:'ekran'},el('h2',{},'Hücre Avı'),
+    el('p',{html:md('Calc’ta her hücrenin bir adı vardır: önce **sütun harfi**, sonra **satır numarası**. Örneğin **B3**. Hadi hücre avına çıkalım!')}),
+    el('div',{class:'modlar'},
+      el('button',{style:'background:linear-gradient(135deg,#16A34A,#0E7490)',onclick:()=>basla('bul')},el('b',{},'1. Hücreyi Bul'),'Adı verilen hücreye tıkla.'),
+      el('button',{style:'background:linear-gradient(135deg,#EA580C,#DB2777)',onclick:()=>basla('ad')},el('b',{},'2. Adını Söyle'),'İşaretli hücrenin adını seç.'),
+      el('button',{style:'background:linear-gradient(135deg,#4F46E5,#7C3AED)',onclick:()=>basla('aralik')},el('b',{},'3. Aralık Ustası'),'Mavi aralığın doğru yazılışını seç.')),
+    el('p',{class:'not'},'İpucu: Sütun başlıkları üstte (A, B, C…), satır numaraları solda (1, 2, 3…).'),IMZA()));}
+function basla(m){D={mod:m,i:0,puan:0,sonuc:[]};tur();}
+function tablo(tikla){const g=el('div',{class:'izg',style:`grid-template-columns:clamp(40px,4vw,60px) repeat(${SUT.length},minmax(0,1fr))`});
+  g.append(el('div',{class:'bas'},''));[...SUT].forEach((h,c)=>g.append(el('div',{class:'bas','data-s':c},h)));
+  for(let r=0;r<SAT;r++){g.append(el('div',{class:'bas','data-r':r},String(r+1)));for(let c=0;c<SUT.length;c++)g.append(el('div',{class:'hc','data-c':c,'data-r':r,onclick:tikla?e=>tikla(c,r,e.currentTarget):null}))}
+  return g}
+const hucre=(g,c,r)=>g.querySelector(`.hc[data-c="${c}"][data-r="${r}"]`);
+function vurgula(g,c,r){g.querySelector(`.bas[data-s="${c}"]`).classList.add('vurgu');g.querySelector(`.bas[data-r="${r}"]`).classList.add('vurgu')}
+function ilerleme(){return el('div',{class:'ilerleme'},Array.from({length:TUR},(_,k)=>el('i',{class:D.sonuc[k]||(k===D.i?'s':'')})))}
+function siklarYap(dogru,yanlislar,bitir){const sec=karistir([dogru,...yanlislar]);const s=el('div',{class:'siklar'});
+  sec.forEach(v=>s.append(el('button',{onclick:e=>{if(D.cevap)return;D.cevap=true;const ok=v===dogru;[...s.children].forEach(b=>{if(b.textContent===dogru)b.classList.add('dogru')});if(!ok)e.currentTarget.classList.add('yanlis');bitir(ok)}},v)));return s}
+function tur(){if(D.i>=TUR)return sonuc();D.cevap=false;skorCiz();sahne.innerHTML='';
+  const c=rnd(SUT.length),r=rnd(SAT),hedefAd=ad(c,r);const gor=el('aside',{class:'gorev'});const alt=el('div');
+  const adk=el('span',{},'');const calc=el('div',{class:'calc'},el('div',{class:'adkutu'},'Ad kutusu:',adk));
+  const bitir=(ok,yazi)=>{D.sonuc[D.i]=ok?'d':'y';if(ok){D.puan+=10;dogruSes()}else yanlisSes();skorCiz();
+    alt.append(el('div',{class:ok?'cevap':'yanlis-k'},ok?'Doğru!':'Doğrusu: '+yazi),el('button',{class:'dugme lac',style:'margin-top:10px',onclick:()=>{D.i++;tur()}},D.i+1>=TUR?'Sonucu gör':'Sonraki →'));gor.querySelector('.ilerleme').replaceWith(ilerleme())};
+  if(D.mod==='bul'){
+    const g=tablo((cc,rr,e)=>{if(D.cevap)return;D.cevap=true;adk.textContent=ad(cc,rr);e.classList.add('etkin');const ok=cc===c&&rr===r;
+      if(!ok){e.classList.add('yanlis');hucre(g,c,r).classList.add('dogru');}else e.classList.add('dogru');vurgula(g,c,r);bitir(ok,hedefAd)});
+    calc.append(g);gor.append(el('div',{class:'soru'},'Bu hücreye tıkla:'),el('div',{class:'hedef'},hedefAd),ilerleme(),alt);}
+  else if(D.mod==='ad'){
+    const g=tablo(null);const h=hucre(g,c,r);h.classList.add('isaret');h.textContent=SEKIL[rnd(SEKIL.length)];calc.append(g);
+    const yan=new Set();const ters=(r+1)+SUT[c];yan.add(ters);
+    while(yan.size<3){const cc=Math.max(0,Math.min(SUT.length-1,c+rnd(3)-1)),rr=Math.max(0,Math.min(SAT-1,r+rnd(3)-1));const a=ad(cc,rr);if(a!==hedefAd)yan.add(a)}
+    gor.append(el('div',{class:'soru'},'İşaretli hücrenin adı ne?'),siklarYap(hedefAd,[...yan],ok=>{vurgula(g,c,r);adk.textContent=hedefAd;bitir(ok,hedefAd)}),ilerleme(),alt);}
+  else{
+    const yatay=Math.random()<.5;let c1=c,r1=r,c2,r2;
+    if(yatay){c1=rnd(SUT.length-2);c2=c1+2+rnd(SUT.length-c1-2);r2=r1}else{r1=rnd(SAT-2);r2=r1+2+rnd(SAT-r1-2);c2=c1}
+    const g=tablo(null);for(let x=c1;x<=c2;x++)for(let y=r1;y<=r2;y++)hucre(g,x,y).classList.add('aralik');calc.append(g);
+    const a1=ad(c1,r1),a2=ad(c2,r2),dogru=a1+':'+a2;
+    const orta=yatay?ad(c1+1,r1):ad(c1,r1+1);
+    gor.append(el('div',{class:'soru'},'Mavi aralık nasıl yazılır?'),siklarYap(dogru,[a1+';'+a2,a1.replace(/([A-H])(\d+)/,'$2$1')+':'+a2.replace(/([A-H])(\d+)/,'$2$1'),a1+':'+orta],ok=>{adk.textContent=dogru;bitir(ok,dogru)}),
+      el('p',{class:'not',style:'margin:0'},'“:” …’den …’e kadar, “;” yalnızca bu hücreler demektir.'),ilerleme(),alt);}
+  sahne.append(el('section',{class:'oyun'},calc,gor));}
+function sonuc(){[523,659,784,1047].forEach((f,i)=>setTimeout(()=>bip(f,.2),i*130));const d=D.sonuc.filter(x=>x==='d').length,m=D.mod;sahne.innerHTML='';
+  sahne.append(el('section',{class:'ekran'},el('h2',{},d>=9?'Hücre avcısı oldun!':d>=6?'Çok iyi!':'Biraz daha alıştırma!'),
+    el('div',{style:'font-family:var(--f-baslik);font-size:clamp(44px,5vw,76px);color:var(--turuncu)'},`${d} / ${TUR}`),
+    el('p',{html:md('Unutma: Hücre adı **önce sütun harfi, sonra satır numarası** ile yazılır. Aralıkta ilk ve son hücre arasına **iki nokta (:)** konur.')}),
+    el('div',{style:'display:flex;gap:12px;flex-wrap:wrap;justify-content:center'},el('button',{class:'dugme',onclick:()=>basla(m)},'Yeniden oyna'),el('button',{class:'dugme lac',onclick:giris},'Ana ekran')),IMZA()));
+  D=null;skorCiz();}
+giris();
+</script>
+</body>
+</html>
